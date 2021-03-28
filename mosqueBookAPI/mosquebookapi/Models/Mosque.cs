@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,16 +8,14 @@ using System.Threading.Tasks;
 namespace mosquebookapi.Models
 {
     [Index(nameof(Email), IsUnique = true)]
-    [Table("User")]
-    public class User
+    [Table("Mosque")]
+    public class Mosque
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Key]
         public Guid Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string Name { get; set; }
+        public string Address { get; set; }
         public string Email { get; set; }
-
-        public virtual IEnumerable<Appointment> Appointments { get; set; }
+        public string PhoneNumber { get; set; }
+        public virtual IEnumerable<Event> Events { get; set; }
     }
 }

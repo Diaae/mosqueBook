@@ -5,26 +5,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace mosquebookapi.Data.Repositories
+namespace mosquebookapi.Data.Repositories.Implementation
 {
-    public class AppointmentRepository : IAppointmentRepository
+    public class EventGroupRepository : IEventGroupRepository
     {
         public void Delete(Guid itemId)
         {
             throw new NotImplementedException();
         }
 
-        public Appointment FindById(Guid itemId)
+        public EventGroup FindById(Guid itemId)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Appointment> ListAll()
+        public IEnumerable<EventGroup> ListAll()
         {
             throw new NotImplementedException();
         }
 
-        public void Save(Appointment item)
+        public void Save(EventGroup item)
         {
             throw new NotImplementedException();
         }

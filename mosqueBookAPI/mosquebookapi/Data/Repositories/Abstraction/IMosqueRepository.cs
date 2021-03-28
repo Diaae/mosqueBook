@@ -4,11 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace mosquebookapi.Repositories
+namespace mosquebookapi.Data.Repositories.Abstraction
 {
-    public interface IAppointmentRepository:IGenericRepository<Appointment>
+    public interface IMosqueRepository : IGenericRepository<Mosque>
     {
-
-        
+      
     }
 }

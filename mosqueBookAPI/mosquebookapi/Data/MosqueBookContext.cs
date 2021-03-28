@@ -13,16 +13,20 @@ namespace mosquebookapi.Data
         {
 
         }
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseMySQL("server=localhost;database=library;user=user;password=password");
-        //}
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            
+        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().ToTable("User");
-            modelBuilder.Entity<Appointment>().ToTable("Appointment");
+            //modelBuilder.Entity<User>().ToTable("User");
+            //modelBuilder.Entity<Appointment>().ToTable("Appointment");
         }
         public DbSet<User> Users { get; set; }
         public DbSet<Appointment>  Appointments { get; set; }
+        public DbSet<Mosque>  Mosques { get; set; }
+        public DbSet<Event>  Events { get; set; }
+        public DbSet<EventType>  EventTypes { get; set; }
+        public DbSet<EventGroup> EventGroups { get; set; }
     }
 }

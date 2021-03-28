@@ -1,10 +1,12 @@
 ﻿using mosquebookapi.Dto;
 using mosquebookapi.Models;
-using mosquebookapi.Repositories;
+using mosquebookapi.Data.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using mosquebookapi.Data.Repositories.Abstraction;
+using mosquebookapi.Services.Abstraction;
 
 namespace mosquebookapi.Services.Implementation
 {
@@ -34,7 +36,7 @@ namespace mosquebookapi.Services.Implementation
             {
                 Id = userAppointmentDto.Appointement.Id,
                 Date = userAppointmentDto.Appointement.Date,
-                User = user
+                //User = user
             };
             _appointmentRepository.Save(appointment);
         }
@@ -52,10 +54,10 @@ namespace mosquebookapi.Services.Implementation
                 },
                 User = new UserDto
                 {
-                    Id = appointment.User.Id,
-                    FirstName = appointment.User.FirstName,
-                    LastName = appointment.User.LastName,
-                    Email = appointment.User.Email
+                    //Id = appointment.User.Id,
+                    //FirstName = appointment.User.FirstName,
+                    //LastName = appointment.User.LastName,
+                    //Email = appointment.User.Email
                 }
 
 

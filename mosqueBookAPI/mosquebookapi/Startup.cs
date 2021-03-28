@@ -8,8 +8,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using mosquebookapi.Data;
-using mosquebookapi.Repositories;
+using mosquebookapi.Data.Repositories;
+using mosquebookapi.Data.Repositories.Abstraction;
+using mosquebookapi.Data.Repositories.Implementation;
 using mosquebookapi.Services;
+using mosquebookapi.Services.Abstraction;
 using mosquebookapi.Services.Implementation;
 using System;
 using System.Collections.Generic;
@@ -35,11 +38,17 @@ namespace mosquebookapi
          
             var mySqlConnectionStr = Configuration.GetConnectionString("MosqueBookDB");
             services.AddDbContextPool<MosqueBookContext>(
-                options => options.UseMySql(mySqlConnectionStr, ServerVersion.AutoDetect(mySqlConnectionStr))
-                );
-            services.AddScoped<IAppointmentRepository, AppointmentRepository>();
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IAppointmentManager, AppointmentManager>();
+                options => options.UseLazyLoadingProxies().UseMySql(mySqlConnectionStr, ServerVersion.AutoDetect(mySqlConnectionStr))
+            );
+
+            services.AddAutoMapper(typeof(Startup));
+            services.AddScoped<IAppointmentRepository, AppointmentRepository>()
+            .AddScoped<IUserRepository, UserRepository>()
+            .AddScoped<IMosqueRepository, MosqueRepository>()
+            .AddScoped<IEventRepository, EventRepository>()
+            .AddScoped<IEventTypeRepository, EventTypeRepository>()
+            .AddScoped<IEventGroupRepository, EventGroupRepository>()
+            .AddScoped<IAppointmentManager, AppointmentManager>();
 
         }
 
