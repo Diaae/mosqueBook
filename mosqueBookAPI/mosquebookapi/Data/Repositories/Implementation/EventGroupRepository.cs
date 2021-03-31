@@ -9,24 +9,34 @@ namespace mosquebookapi.Data.Repositories.Implementation
 {
     public class EventGroupRepository : IEventGroupRepository
     {
+        private readonly MosqueBookContext _context;
+        public EventGroupRepository(MosqueBookContext mosqueBookContext)
+        {
+            _context = mosqueBookContext;
+        }
         public void Delete(Guid itemId)
         {
-            throw new NotImplementedException();
+            var eventGroups = _context.EventGroups.Find(itemId);
+
+            _context.EventGroups.Remove(eventGroups);
+
+            _context.SaveChanges();
         }
 
         public EventGroup FindById(Guid itemId)
         {
-            throw new NotImplementedException();
+            return _context.EventGroups.SingleOrDefault(e => e.Id == itemId);
         }
 
         public IEnumerable<EventGroup> ListAll()
         {
-            throw new NotImplementedException();
+            return _context.EventGroups.ToList();
         }
 
         public void Save(EventGroup item)
         {
-            throw new NotImplementedException();
+            _context.EventGroups.Add(item);
+            _context.SaveChanges();
         }
     }
 }

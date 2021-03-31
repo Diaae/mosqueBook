@@ -4,6 +4,7 @@
       <nav>
         <router-link to="/">Home</router-link>
         <router-link to="/booking">Book a place</router-link>
+        <router-link to="/Events"> Events list </router-link>
       </nav>
       <main>
         <router-view></router-view>

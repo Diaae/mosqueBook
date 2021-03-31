@@ -9,8 +9,6 @@ namespace mosquebookapi.Data.Repositories.Implementation
 {
     public class EventTypeRepository : IEventTypeRepository
     {
-
-
         private readonly MosqueBookContext _context;
         public EventTypeRepository(MosqueBookContext mosqueBookContext)
         {

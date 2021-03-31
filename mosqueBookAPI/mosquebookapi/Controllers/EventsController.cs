@@ -25,7 +25,7 @@ namespace mosquebookapi.Controllers
         public IEnumerable<Event> Get()
         {
             return _eventRepository.ListAll();
-        }
+        } 
 
         // GET api/<EventsController>/5
         [HttpGet("{id}")]
