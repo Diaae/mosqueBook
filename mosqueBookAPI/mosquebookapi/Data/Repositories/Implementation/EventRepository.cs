@@ -17,7 +17,11 @@ namespace mosquebookapi.Data.Repositories.Implementation
         }
         public void Delete(Guid itemId)
         {
-            throw new NotImplementedException();
+            var @event = _context.Events.Find(itemId);
+
+            _context.Events.Remove(@event);
+
+            _context.SaveChanges();
         }
 
         public Event FindById(Guid itemId)
@@ -32,6 +36,8 @@ namespace mosquebookapi.Data.Repositories.Implementation
 
         public void Save(Event item)
         {
+            _context.Attach(item.Mosque);
+            _context.Attach(item.EventType);
             _context.Events.Add(item);
             _context.SaveChanges();
         }

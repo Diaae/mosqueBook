@@ -37,16 +37,21 @@ namespace mosquebookapi.Controllers
 
         // GET api/<MosqueController>/5
         [HttpGet("{id}")]
-        public Mosque Get(Guid id)
+        public IActionResult Get(Guid id)
         {
-            return _mosqueRepository.FindById(id);
+            var mosque = _mosqueRepository.FindById(id);
+            if (mosque == null)
+            {
+                return NotFound();
+            }
+            return Ok(mosque);
         }
 
 
 
         // PUT api/<MosqueController>/5
         [HttpPut("{id}")]
-        public  IActionResult Put(Guid id, [FromBody] MosqueDto mosqueDto)
+        public  IActionResult Put([FromRoute] Guid id, [FromBody] MosqueDto mosqueDto)
         {
             if (id != mosqueDto.Id)
             {

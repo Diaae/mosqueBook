@@ -17,12 +17,16 @@ namespace mosquebookapi.Data.Repositories
         }
         public void Delete(Guid itemId)
         {
-            throw new NotImplementedException();
+            var mosque = _context.Mosques.Find(itemId);
+
+            _context.Mosques.Remove(mosque);
+
+            _context.SaveChanges();
         }
 
         public Mosque FindById(Guid itemId)
         {
-            throw new NotImplementedException();
+            return _context.Mosques.SingleOrDefault(m => m.Id == itemId);
         }
 
         public IEnumerable<Mosque> ListAll()

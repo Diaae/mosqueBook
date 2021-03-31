@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using mosquebookapi.Data.Repositories.Abstraction;
+using mosquebookapi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,34 +21,48 @@ namespace mosquebookapi.Controllers
         }
         // GET: api/<EventTypes>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<EventType> Get()
         {
-            return new string[] { "value1", "value2" };
+            return _eventTypeRepository.ListAll();
         }
 
         // GET api/<EventTypes>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public string Get(Guid id)
         {
             return "value";
         }
 
-        // POST api/<EventTypes>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
 
         // PUT api/<EventTypes>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put([FromRoute] Guid id, [FromBody] EventType eventType)
         {
+            if(id != eventType.Id)
+            {
+                return BadRequest();
+            }
+
+            eventType.Id = id;
+            try
+            {
+                _eventTypeRepository.Save(eventType);
+                return Ok();
+            }catch(Exception e)
+            {
+                return StatusCode(500, new
+                {
+                    message = e.InnerException.Message
+                });
+            }
+
         }
 
         // DELETE api/<EventTypes>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
+            _eventTypeRepository.Delete(id);
         }
     }
 }
