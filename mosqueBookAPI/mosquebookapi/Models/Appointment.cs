@@ -18,6 +18,7 @@ namespace mosquebookapi.Models
         public Guid Id { get; set; }
         public Guid Token { get; set; }
         public bool IsActif => true;
+        [Required]
         public DateTime Date { get; set; }
         public virtual User User { get; set; }
         public virtual EventGroup Group { get; set; }
