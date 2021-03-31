@@ -37,7 +37,7 @@ namespace mosquebookapi.Controllers
 
         // PUT api/<EventsController>/5
         [HttpPut("{id}")]
-        public IActionResult Put(Guid id, [FromBody] Event @event)
+        public IActionResult Put([FromRoute] Guid id, [FromBody] Event @event)
         {
             if (id != @event.Id)
             {
@@ -61,8 +61,9 @@ namespace mosquebookapi.Controllers
 
         // DELETE api/<EventsController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
+            _eventRepository.Delete(id);
         }
     }
 }

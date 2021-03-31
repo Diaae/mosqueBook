@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace mosquebookapi.Models
@@ -16,6 +17,7 @@ namespace mosquebookapi.Models
         public virtual EventType EventType { get; set; }
         public string Description { get; set; }
         public DateTime DateTime { get; set; }
+        [JsonIgnore]
         public virtual Mosque Mosque { get; set; }
         public virtual IEnumerable<EventGroup> Groups { get; set; }
        

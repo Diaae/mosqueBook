@@ -18,7 +18,11 @@ namespace mosquebookapi.Data.Repositories.Implementation
         }
         public void Delete(Guid itemId)
         {
-            throw new NotImplementedException();
+            var eventTypes = _context.EventTypes.Find(itemId);
+
+            _context.EventTypes.Remove(eventTypes);
+
+            _context.SaveChanges();
         }
 
         public EventType FindById(Guid itemId)
