@@ -17,6 +17,7 @@ using mosquebookapi.Services.Implementation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace mosquebookapi
@@ -34,13 +35,14 @@ namespace mosquebookapi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-         
+            services.AddControllers().AddJsonOptions(
+                configure=>configure.JsonSerializerOptions.PropertyNameCaseInsensitive = true
+            );
+            
             var mySqlConnectionStr = Configuration.GetConnectionString("MosqueBookDB");
             services.AddDbContextPool<MosqueBookContext>(
                 options => options.UseLazyLoadingProxies().UseMySql(mySqlConnectionStr, ServerVersion.AutoDetect(mySqlConnectionStr))
             );
-
             services.AddAutoMapper(typeof(Startup));
             services.AddScoped<IAppointmentRepository, AppointmentRepository>()
             .AddScoped<IUserRepository, UserRepository>()
@@ -64,7 +66,7 @@ namespace mosquebookapi
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseCors("*");
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
