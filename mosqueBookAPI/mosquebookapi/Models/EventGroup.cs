@@ -14,6 +14,7 @@ namespace mosquebookapi.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public Guid Id { get; set; }
+        [Required]
         public string Name { get; set; }
         public virtual IEnumerable<Appointment> Appointments { get; set; }
         public virtual Event Event { get; set; }
