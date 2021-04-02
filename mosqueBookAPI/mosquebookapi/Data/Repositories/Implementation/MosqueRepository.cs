@@ -1,44 +1,18 @@
-﻿using mosquebookapi.Data.Repositories.Abstraction;
+﻿using mosquebookapi.Data.Repositories.Interfaces;
 using mosquebookapi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace mosquebookapi.Data.Repositories
+namespace mosquebookapi.Data.Repositories.Implementation
 {
-    public class MosqueRepository : IMosqueRepository
+    public class MosqueRepository : GenericRepository<Mosque>,IMosqueRepository
     {
 
-        private readonly MosqueBookContext _context;
-        public MosqueRepository(MosqueBookContext mosqueBookContext)
+        public MosqueRepository(ApplicationContext applicationContext):base(applicationContext)
         {
-            _context = mosqueBookContext;
         }
-        public void Delete(Guid itemId)
-        {
-            var mosque = _context.Mosques.Find(itemId);
-
-            _context.Mosques.Remove(mosque);
-
-            _context.SaveChanges();
-        }
-
-        public Mosque FindById(Guid itemId)
-        {
-            return _context.Mosques.SingleOrDefault(m => m.Id == itemId);
-        }
-
-        public IEnumerable<Mosque> ListAll()
-        {
-           return  _context.Mosques.ToList();
-        }
-
-        public void Save(Mosque item)
-        {
-            _context.Mosques.Add(item);
-            _context.SaveChanges();
-            
-        }
+       
     }
 }

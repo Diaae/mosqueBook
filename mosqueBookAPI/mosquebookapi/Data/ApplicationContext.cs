@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace mosquebookapi.Data
 {
-    public class MosqueBookContext : DbContext
+    public class ApplicationContext : DbContext
     {
-        public MosqueBookContext(DbContextOptions<MosqueBookContext> options) : base(options)
+        public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
 
         }

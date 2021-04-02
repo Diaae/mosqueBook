@@ -1,32 +1,17 @@
-﻿using mosquebookapi.Data.Repositories.Abstraction;
+﻿using mosquebookapi.Data.Repositories.Interfaces;
 using mosquebookapi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace mosquebookapi.Data.Repositories
+namespace mosquebookapi.Data.Repositories.Implementation
 {
-    public class AppointmentRepository : IAppointmentRepository
+    public class AppointmentRepository : GenericRepository<Appointment>,IAppointmentRepository
     {
-        public void Delete(Guid itemId)
+        public AppointmentRepository(ApplicationContext applicationContext):base(applicationContext)
         {
-            throw new NotImplementedException();
-        }
-
-        public Appointment FindById(Guid itemId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Appointment> ListAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Save(Appointment item)
-        {
-            throw new NotImplementedException();
+                
         }
     }
 }

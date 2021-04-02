@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using mosquebookapi.Models.Base;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,11 +11,9 @@ namespace mosquebookapi.Models
 {
     [Index(nameof(Email), IsUnique = true)]
     [Table("User")]
-    public class User
+    public partial class User : EntityBase<Guid>
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Key]
-        public Guid Id { get; set; }
+        
         [Required]
         public string FirstName { get; set; }
         [Required]

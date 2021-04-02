@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using mosquebookapi.Models.Base;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,11 +12,9 @@ namespace mosquebookapi.Models
     [Index(nameof(Date), IsUnique = true)]
     [Index(nameof(Token), IsUnique = true)]
     [Table("Appointment")]
-    public class Appointment
+    public partial class Appointment : EntityBase<Guid>
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Key]
-        public Guid Id { get; set; }
+        
         public Guid Token { get; set; }
         public bool IsActif => true;
         public DateTime Date { get; set; }

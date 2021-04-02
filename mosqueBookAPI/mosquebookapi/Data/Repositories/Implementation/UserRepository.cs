@@ -1,40 +1,18 @@
 ﻿using mosquebookapi.Data;
-using mosquebookapi.Data.Repositories.Abstraction;
+using mosquebookapi.Data.Repositories.Interfaces;
 using mosquebookapi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace mosquebookapi.Data.Repositories { 
-    public class UserRepository : IUserRepository
+namespace mosquebookapi.Data.Repositories.Implementation { 
+    public class UserRepository : GenericRepository<User>,IUserRepository
     {
-        private readonly MosqueBookContext _context;
-        public UserRepository(MosqueBookContext mosqueBookContext)
+        public UserRepository(ApplicationContext applicationContext):base(applicationContext)
         {
-            _context = mosqueBookContext;
         }
 
-        public void Delete(Guid itemId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public User FindById(Guid itemId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<User> ListAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Save(User item)
-        {
-            _context.Users.Add(item);
-            _context.SaveChanges();
-            
-        }
+       
     }
 }

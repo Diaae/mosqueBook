@@ -1,68 +1,79 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using mosquebookapi.Data.Repositories.Abstraction;
-using mosquebookapi.Models;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using mosquebookapi.Dto;
+using mosquebookapi.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace mosquebookapi.Controllers
+namespace eventTypebookapi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class EventTypesController : ControllerBase
     {
-        private readonly IEventTypeRepository _eventTypeRepository;
-        public EventTypesController(IEventTypeRepository eventTypeRepository)
+        private readonly EventTypeService _eventTypeService;
+        public EventTypesController(EventTypeService eventTypeService)
         {
-            _eventTypeRepository = eventTypeRepository;
+            _eventTypeService = eventTypeService;
         }
-        // GET: api/<EventTypes>
         [HttpGet]
-        public IEnumerable<EventType> Get()
+        public async Task<IEnumerable<EventTypeDto>> Get()
         {
-            return _eventTypeRepository.ListAll();
+            return await _eventTypeService.ListAll();
         }
 
-        // GET api/<EventTypes>/5
+        // GET api/<MosqueController>/5
         [HttpGet("{id}")]
-        public string Get(Guid id)
+        public async Task<IActionResult> Get(Guid id)
         {
-            return "value";
+            var eventType = await _eventTypeService.FindById(id);
+            if (eventType == null)
+            {
+                return NotFound();
+            }
+            return Ok(eventType);
         }
 
 
-        // PUT api/<EventTypes>/5
+
+        // PUT api/<MosqueController>/5
         [HttpPut("{id}")]
-        public IActionResult Put([FromRoute] Guid id, [FromBody] EventType eventType)
+        public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] EventTypeDto eventTypeDto)
         {
-            if(id != eventType.Id)
+            if (id != eventTypeDto.Id || !ModelState.IsValid)
             {
                 return BadRequest();
             }
-
-            eventType.Id = id;
             try
             {
-                _eventTypeRepository.Save(eventType);
+                int result = await _eventTypeService.Save(eventTypeDto);
+                if (result < 1)
+                {
+                    return StatusCode(500, new
+                    {
+                        message = "Error while saving"
+                    });
+                }
                 return Ok();
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 return StatusCode(500, new
                 {
                     message = e.InnerException.Message
                 });
             }
-
         }
 
-        // DELETE api/<EventTypes>/5
+        // DELETE api/<MosqueController>/5
         [HttpDelete("{id}")]
-        public void Delete(Guid id)
+        public async Task Delete(Guid id)
         {
-            _eventTypeRepository.Delete(id);
+            await _eventTypeService.Remove(id);
         }
     }
 }

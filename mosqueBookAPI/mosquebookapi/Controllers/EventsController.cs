@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using mosquebookapi.Data.Repositories.Abstraction;
+using mosquebookapi.Data.Repositories.Interfaces;
+using mosquebookapi.Dto;
 using mosquebookapi.Models;
+using mosquebookapi.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,32 +16,32 @@ namespace mosquebookapi.Controllers
     [ApiController]
     public class EventsController : ControllerBase
     {
-        private readonly IEventRepository _eventRepository;
-        public EventsController(IEventRepository eventRepository)
+        private readonly EventService _eventService;
+        public EventsController(EventService eventService)
         {
-            _eventRepository = eventRepository;
+            _eventService = eventService;
         }
 
         // GET: api/<EventsController>
         [HttpGet]
-        public IEnumerable<Event> Get()
+        public async Task<IEnumerable<EventDto>> Get()
         {
-            return _eventRepository.ListAll();
+            return await _eventService.ListAll();
         } 
 
         // GET api/<EventsController>/5
         [HttpGet("{id}")]
-        public Event Get(Guid id)
+        public async Task<EventDto> Get(Guid id)
         {
-            return _eventRepository.FindById(id);
+            return await _eventService.FindById(id);
         }
 
 
         // PUT api/<EventsController>/5
         [HttpPut("{id}")]
-        public IActionResult Put([FromRoute] Guid id, [FromBody] Event @event)
+        public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] EventDto @event)
         {
-            if (id != @event.Id)
+            if (id != @event.Id || !ModelState.IsValid)
             {
                 return BadRequest();
             }
@@ -47,23 +49,31 @@ namespace mosquebookapi.Controllers
             @event.Id = id;
             try
             {
-                _eventRepository.Save(@event);
+                var result = await _eventService.Save(@event);
+                if (result < 1)
+                {
+                    return StatusCode(500, new
+                    {
+                        message = "Error while saving"
+                    });
+                }
                 return Ok();
             }
             catch (Exception e)
             {
                 return StatusCode(500, new
                 {
-                    message = e.Message
+                    message = e.InnerException.Message
                 });
             }
         }
 
         // DELETE api/<EventsController>/5
         [HttpDelete("{id}")]
-        public void Delete(Guid id)
+        public async Task Delete(Guid id)
         {
-            _eventRepository.Delete(id);
+            
+            await _eventService.Remove(id);
         }
     }
 }

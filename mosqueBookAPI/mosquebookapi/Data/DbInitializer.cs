@@ -7,7 +7,7 @@ namespace mosquebookapi.Data
 {
     public class DbInitializer
     {
-        internal static void Initialize(MosqueBookContext context)
+        internal static void Initialize(ApplicationContext context)
         {
             context.Database.EnsureCreated();
         }

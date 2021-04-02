@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using mosquebookapi.Models.Base;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -9,11 +10,9 @@ using System.Threading.Tasks;
 namespace mosquebookapi.Models
 {
     [Table("Group")]
-    public class EventGroup
+    public partial class EventGroup:EntityBase<Guid>
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Key]
-        public Guid Id { get; set; }
+        
         [Required]
         public string Name { get; set; }
         public virtual IEnumerable<Appointment> Appointments { get; set; }

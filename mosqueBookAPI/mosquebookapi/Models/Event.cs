@@ -1,4 +1,5 @@
-﻿using System;
+﻿using mosquebookapi.Models.Base;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,11 +10,9 @@ using System.Threading.Tasks;
 namespace mosquebookapi.Models
 {
     [Table("Event")]
-    public class Event
+    public partial class Event : EntityBase<Guid>
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Key]
-        public Guid Id { get; set; }
+        
         public virtual EventType EventType { get; set; }
         public string Description { get; set; }
         public DateTime DateTime { get; set; }
