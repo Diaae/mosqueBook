@@ -1,11 +1,8 @@
 <template>
   <div id="app">
     <div>
-      <nav>
-        <router-link to="/">Home</router-link>
-        <router-link to="/booking">Book a place</router-link>
-        <router-link to="/Events"> Events list </router-link>
-      </nav>
+      <nav-bar class="mb-4">
+      </nav-bar>
       <main>
         <router-view></router-view>
       </main>
@@ -14,9 +11,12 @@
 </template>
 
 <script>
-
+import navbar from "./components/Nav"
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    "nav-bar" : navbar
+  }
 
 }
 </script>
