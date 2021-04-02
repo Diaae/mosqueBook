@@ -1,68 +1,13 @@
 <template>
-  <div class="row clearfix">
-    <div class="col-lg-10 col-md-12 col-sm-12" style="margin: 0 auto">
-      <div class="card">
-        <div class="header">
-          <h2>Events List</h2>
-        </div>
-        <div class="body">
-          <div class="table-responsive">
-            <table class="table table-striped">
-              <!-- HEADER -->
-              <thead>
-                <tr>
-                  <th>Event name</th>
-                  <th>Date</th>
-                  <th>Availability</th>
-                  <th>Groups</th>
-                  <th>Description</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <!-- BODY ROWS -->
-              <tbody>
-                <tr v-for="event in events" :key="event.id">
-                  <!-- Event name -->
-                  <td>{{ event.eventType.name }}</td>
-                  <!-- Event date -->
-                  <td>
-                    <div class="input-group masked-input">
-                      <input
-                        v-model="event.dateTime"
-                        type="date"
-                        class="form-control date"
-                      />
-                    </div>
-                  </td>
-                  <!-- Availability -->
-                  <td> 158 </td>
-                  <!-- Groups -->
-                  <td>
-                    <select
-                      v-model="event.groups"
-                      class="form-control show-tick ms select2"
-                      data-placeholder="Select"
-                      @keyup.esc="clearPower"
-                      @keyup.enter="validate"
-                    >
-                      <option default>Group 1</option>
-                      <option>Group 2</option>
-                    </select>
-                  </td>
-                  <!-- Event description -->
-                  <td>{{ event.description }}</td>
-                  <!-- Event action -->
-                  <td>
-                    <button class="btn btn-primary">Book</button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+    <b-container>
+      <b-table stacked="md" striped hover :items="events">
+        <template v-slot:cell(groups)="row">
+          <b-badge class="p-2 mb-1 mr-1" v-for="group in row.item.groups" :key="group.id"
+           :variant="group.isFull?'danger':'success'"> {{group.name}} 
+          </b-badge>
+        </template>
+      </b-table>
+    </b-container>
 </template>
 
 <script>
@@ -80,7 +25,18 @@ export default {
           },
           description: "Allaaaahu akbar",
           dateTime: "0001-01-01T00:00:00",
-          groups: 2,
+          groups: [
+            {
+              id: "1",
+              name: "group 1",
+              isFull: true
+            },
+            {
+              id: "2",
+              name: "group 2",
+              isFull: false
+            }
+          ],
         },
 
         {
@@ -92,19 +48,24 @@ export default {
           },
           description: "Allaaaahu akbar",
           dateTime: "0001-01-01T00:00:00",
-          groups: 1,
+          groups: [
+            {
+              id: "3",
+              name: "group 3",
+              isFull: true
+            },
+            {
+              id: "4",
+              name: "group 5",
+              isFull: false
+            }
+          ],
         },
       ],
     };
   },
-
-  methods: {
-    clearPower() {
-      this.events.groups = "";
-    },
-  },
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 </style>
