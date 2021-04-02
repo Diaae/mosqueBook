@@ -2,9 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 const Home = () => import('@/components/Home')
 const Booking = () => import('@/components/Booking')
-const Events = () => import('@/components/Events')
-const Mosques = () => import('@/components/Mosque')
-const MosquesAdd = () => import('@/components/MosqueAdd')
+const Events = () => import('@/views/Events')
+const Mosques = () => import('@/views/Mosque')
+const MosquesAdd = () => import('@/views/MosqueAdd')
 
 Vue.use(Router);
 const routes = [

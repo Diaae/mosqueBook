@@ -1,7 +1,7 @@
 import axios from 'axios'
-
+import { API,PORT } from './config';
 const instance = axios.create({
-  baseURL: process.env.VUE_APP_SERVER+':'+process.env.VUE_APP_PORT,
+  baseURL: API+':'+PORT,
   timeout: 60000
 });
 // var config = {
