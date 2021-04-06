@@ -70,10 +70,11 @@
           </b-col>
         </b-row>
     </b-container>
+
 </template>
 
 <script>
-import api from '../utilities/axios_api'
+import api from '../shared/data.service'
 export default {
   name: "Events",
   data() {
@@ -99,14 +100,14 @@ export default {
       }
   },
   methods:{
- onFiltered(filteredItems) {
+    onFiltered(filteredItems) {
         // Trigger pagination to update the number of buttons/pages due to filtering
         this.totalRows = filteredItems.length;
         this.currentPage = 1
       },
-      Book(eventId){
-        alert("event id: " + eventId);
-      }
+    Book(eventId){
+      alert("event id: " + eventId);
+    }
   },
   mounted(){
     api.fetch('events',(response)=>{
