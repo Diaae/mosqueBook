@@ -8,5 +8,6 @@ namespace mosquebookapi.Data.Repositories.Interfaces
 {
     public interface IEventRepository : IGenericRepository<Event>
     {
+        void Save(Event @event);
     }
 }

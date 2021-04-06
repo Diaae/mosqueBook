@@ -13,10 +13,12 @@ namespace mosquebookapi.Data
         public MappingProfile()
         {
             // Add as many of these lines as you need to map your objects
-            CreateMap<User, UserDto>();
-            CreateMap<UserDto, User>();
-            CreateMap<Mosque, MosqueDto>();
-            CreateMap<MosqueDto, Mosque>();
+            CreateMap<User, UserDto>().ReverseMap();
+            CreateMap<Mosque, MosqueDto>().ReverseMap();
+            CreateMap<EventType, EventTypeDto>().ReverseMap();
+            CreateMap<Event, EventDto>().ReverseMap();
+            CreateMap<Appointment, AppointmentDto>().ReverseMap();
+            CreateMap<EventGroup, EventGroupDto>().ReverseMap();
         }
     }
 }

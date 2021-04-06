@@ -64,7 +64,7 @@ namespace mosquebookapi
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Touch.Api v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Mosquebook.Api v1"));
             }
 
             app.UseHttpsRedirection();

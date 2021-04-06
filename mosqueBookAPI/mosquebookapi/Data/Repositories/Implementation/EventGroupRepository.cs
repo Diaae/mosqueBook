@@ -12,6 +12,18 @@ namespace mosquebookapi.Data.Repositories.Implementation
         public EventGroupRepository(ApplicationContext applicationContext):base(applicationContext)
         {
         }
-      
+
+        public void Save(EventGroup eventGroup)
+        {
+            _context.Attach(eventGroup.Event);
+            if (Exists(eventGroup))
+            {
+                Update(eventGroup);
+            }
+            else
+            {
+                Add(eventGroup);
+            }
+        }
     }
 }

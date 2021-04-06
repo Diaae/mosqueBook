@@ -34,29 +34,27 @@ namespace mosquebookapi.Services
         public async Task<int> Save(EventDto eventDto)
         {
             var @event = _mapper.Map<Event>(eventDto);
-            if (_eventRepository.Exists(@event))
-            {
-                _eventRepository.Update(@event);
-            }
-            else
-            {
-
-                _eventRepository.Add(@event);
-            }
+            _eventRepository.Save(@event);
             return await _uow.CommitAsync();
         }
 
         public async Task<EventDto> FindById(Guid id)
         {
-            var mosque = await _eventRepository.FindById(id);
+            var @event = await _eventRepository.FindById(id);
 
-            return _mapper.Map<EventDto>(mosque);
+            return _mapper.Map<EventDto>(@event);
         }
 
         public async Task Remove(Guid eventId)
         {
-            var mosque = await _eventRepository.FindById(eventId);
-            _eventRepository.Remove(mosque);
+            var @event = await _eventRepository.FindById(eventId);
+            _eventRepository.Remove(@event);
+        }
+
+        public  int GetAvaiability(EventDto eventDto)
+        {
+            var tuple = eventDto.Groups.Select(g => g.MaxPlaces - g.Appointments.Count());
+            return  tuple.Aggregate(0,(acc,x) => acc + x);
         }
 
     }

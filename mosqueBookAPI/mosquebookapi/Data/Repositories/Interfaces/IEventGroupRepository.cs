@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace mosquebookapi.Data.Repositories.Interfaces
 {
-    interface IEventGroupRepository : IGenericRepository<EventGroup>
+    public interface IEventGroupRepository : IGenericRepository<EventGroup>
     {
+        void Save(EventGroup eventGroup);
     }
 }

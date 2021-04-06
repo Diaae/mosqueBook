@@ -15,7 +15,7 @@ namespace mosquebookapi.Models
     { 
         public string Name { get; set; }
         public string Description { get; set; }
-        [JsonIgnore]
+        
         public virtual IEnumerable<Event> Events { get; set; }
 
     }

@@ -14,42 +14,42 @@ namespace mosquebookapi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EventsController : ControllerBase
+    public class EventGroupsController : ControllerBase
     {
-        private readonly EventService _eventService;
-        public EventsController(EventService eventService)
+        private readonly EventGroupService _eventGroupService;
+        public EventGroupsController(EventGroupService eventGroupService)
         {
-            _eventService = eventService;
+            _eventGroupService = eventGroupService;
         }
 
         // GET: api/<EventsController>
         [HttpGet]
-        public async Task<IEnumerable<EventDto>> Get()
+        public async Task<IEnumerable<EventGroupDto>> Get()
         {
-            return await _eventService.ListAll();
+            return await _eventGroupService.ListAll();
         }
 
         // GET api/<EventsController>/5
         [HttpGet("{id}")]
-        public async Task<EventDto> Get(Guid id)
+        public async Task<EventGroupDto> Get(Guid id)
         {
-            return await _eventService.FindById(id);
+            return await _eventGroupService.FindById(id);
         }
 
 
         // PUT api/<EventsController>/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] EventDto @event)
+        public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] EventGroupDto eventGroupDto)
         {
-            if (id != @event.Id || !ModelState.IsValid)
+            if (id != eventGroupDto.Id || !ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            @event.Id = id;
+            eventGroupDto.Id = id;
             try
             {
-                var result = await _eventService.Save(@event);
+                var result = await _eventGroupService.Save(eventGroupDto);
                 if (result < 1)
                 {
                     return StatusCode(500, new
@@ -63,7 +63,7 @@ namespace mosquebookapi.Controllers
             {
                 return StatusCode(500, new
                 {
-                    message = e.Message
+                    message = e.InnerException.Message
                 });
             }
         }
@@ -73,7 +73,7 @@ namespace mosquebookapi.Controllers
         public async Task Delete(Guid id)
         {
 
-            await _eventService.Remove(id);
+            await _eventGroupService.Remove(id);
         }
     }
 }

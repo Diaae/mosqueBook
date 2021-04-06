@@ -12,6 +12,7 @@ namespace mosquebookapi.Services
             services.AddScoped<MosqueService>();
             services.AddScoped<EventService>();
             services.AddScoped<EventTypeService>();
+            services.AddScoped<EventGroupService>();
             return services;
         }
     }

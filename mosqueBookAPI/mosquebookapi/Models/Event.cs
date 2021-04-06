@@ -15,7 +15,7 @@ namespace mosquebookapi.Models
         
         public virtual EventType EventType { get; set; }
         public string Description { get; set; }
-        public DateTime DateTime { get; set; }
+        public DateTime Date { get; set; }
         [JsonIgnore]
         public virtual Mosque Mosque { get; set; }
         public virtual IEnumerable<EventGroup> Groups { get; set; }
