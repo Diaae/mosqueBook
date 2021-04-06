@@ -1,69 +1,120 @@
 <template>
-    <b-container>
-      <b-table stacked="md" striped hover :items="events">
-        <template v-slot:cell(groups)="row">
-          <b-badge class="p-2 mb-1 mr-1" v-for="group in row.item.groups" :key="group.id"
+    <b-container>        
+      <b-row>
+          <b-col md="6" class="my-1">
+            <b-form-group label-cols-sm="3" label="Filter" class="mb-0">
+              <b-input-group>
+                <b-form-input v-model="filter" placeholder="Input a value"></b-form-input>
+                <b-input-group-append>
+                  <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
+                </b-input-group-append>
+              </b-input-group>
+            </b-form-group>
+          </b-col>
+          <b-col md="6" class="my-1">
+            <b-form-group label-cols-sm="3" label="Per page" class="mb-0">
+              <b-form-select v-model="perPage" :options="pageOptions"></b-form-select>
+            </b-form-group>
+          </b-col>
+        </b-row>
+
+        <!-- Main table element -->
+        <b-table head-variant="dark"
+                 bordered
+                 hover
+                 show-empty
+                 stacked="md"
+                 :items="events"
+                 :fields="fields"
+                 :current-page="currentPage"
+                 :per-page="perPage"
+                 :filter="filter"
+                 :sort-by.sync="sortBy"
+                 :sort-desc.sync="sortDesc"
+                 :sort-direction="sortDirection"
+                 @filtered="onFiltered"
+        >
+          <template #table-busy class="text-center text-danger my-2">
+            <b-spinner class="align-middle"></b-spinner>
+            <strong>Chargement...</strong>
+          </template>
+          <template #cell(groups)="row">
+          <b-badge class="p-2 mb-1 mr-1" v-for="group in row.value" :key="group.id"
            :variant="group.isFull?'danger':'success'"> {{group.name}} 
           </b-badge>
         </template>
-      </b-table>
+        <template #cell(mosque)="row">
+           {{row.value.name}} 
+        </template>
+       
+        <template #cell(eventType)="row">
+           {{row.value.name}} 
+        </template>
+          <template #cell(actions)="row">
+            <b-button variant="primary mr-1" v-b-modal.modal-moteur @click="Book(row.item.id)">
+              Book
+            </b-button>
+          
+          </template>
+
+        </b-table>
+
+        <b-row>
+          <b-col md="6" class="my-1">
+            <b-pagination
+              v-model="currentPage"
+              :total-rows="totalRows"
+              :per-page="perPage"
+              class="my-0"
+            ></b-pagination>
+          </b-col>
+        </b-row>
     </b-container>
 </template>
 
 <script>
+import api from '../utilities/axios_api'
 export default {
   name: "Events",
   data() {
     return {
-      events: [
-        {
-          id: "d8579b21-99ed-4f94-9188-221e63a96628",
-          eventType: {
-            id: "ade17efa-23c6-4a1b-8aa9-d1f825f6979a",
-            name: "Al-Fajr",
-            description: "Alhamdulilah",
-          },
-          description: "Allaaaahu akbar",
-          dateTime: "0001-01-01T00:00:00",
-          groups: [
-            {
-              id: "1",
-              name: "group 1",
-              isFull: true
-            },
-            {
-              id: "2",
-              name: "group 2",
-              isFull: false
-            }
-          ],
-        },
-
-        {
-          id: "d8579b21-99ed-4f94-9188-221e63a96627",
-          eventType: {
-            id: "ade17efa-23c6-4a1b-8aa9-d1f825f6979j",
-            name: "Al-Dohr",
-            description: "Alhamdulilah",
-          },
-          description: "Allaaaahu akbar",
-          dateTime: "0001-01-01T00:00:00",
-          groups: [
-            {
-              id: "3",
-              name: "group 3",
-              isFull: true
-            },
-            {
-              id: "4",
-              name: "group 5",
-              isFull: false
-            }
-          ],
-        },
-      ],
-    };
+        events: [],
+        fields: [
+          {key: 'eventType', label: 'Event Type', sortable: true, sortDirection: 'desc'},
+          {key: 'description', label: 'Description', sortable: true, class: 'text-center'},
+          {key: 'date', label: 'Date', sortable: true, class: 'text-center'},
+          {key: 'mosque', label: 'Mosque', sortable: true, class: 'text-center'},
+          {key: 'availability', label: 'Availability', sortable: true, class: 'text-center'},
+          {key: 'groups', label: 'Groups', sortable: true, class: 'text-center'},
+          {key: 'actions', label: 'Actions'}
+        ],
+        totalRows: 1,
+        currentPage: 1,
+        perPage: 5,
+        pageOptions: [5, 10, 15],
+        sortBy: null,
+        sortDesc: false,
+        sortDirection: 'asc',
+        filter: null,
+      }
   },
+  methods:{
+ onFiltered(filteredItems) {
+        // Trigger pagination to update the number of buttons/pages due to filtering
+        this.totalRows = filteredItems.length;
+        this.currentPage = 1
+      },
+      Book(eventId){
+        alert("event id: " + eventId);
+      }
+  },
+  mounted(){
+    api.fetch('events',(response)=>{
+      this.events = response.data;
+      this.totalRows = this.events.length;
+      console.log(response);
+    })
+  }
 };
 </script>
 
