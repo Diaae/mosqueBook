@@ -47,19 +47,7 @@
         <b-spinner class="align-middle"></b-spinner>
         <strong>Chargement...</strong>
       </template>
-      <template #cell(groups)="row">
-        <b-badge
-          class="p-2 mb-1 mr-1"
-          v-for="group in row.value"
-          :key="group.id"
-          :variant="group.isFull ? 'danger' : 'success'"
-        >
-          {{ group.name }}
-        </b-badge>
-      </template>
-      <template #cell(mosque)="row">
-        {{ row.value.name }}
-      </template>
+
 
       <template #cell(eventType)="row">
         {{ row.value.name }}
@@ -105,25 +93,6 @@ export default {
         {
           key: "description",
           label: "Description",
-          sortable: true,
-          class: "text-center",
-        },
-        { key: "date", label: "Date", sortable: true, class: "text-center" },
-        {
-          key: "mosque",
-          label: "Mosque",
-          sortable: true,
-          class: "text-center",
-        },
-        {
-          key: "availability",
-          label: "Availability",
-          sortable: true,
-          class: "text-center",
-        },
-        {
-          key: "groups",
-          label: "Groups",
           sortable: true,
           class: "text-center",
         },
