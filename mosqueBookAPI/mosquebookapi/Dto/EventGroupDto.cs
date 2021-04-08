@@ -14,5 +14,13 @@ namespace mosquebookapi.Dto
         [JsonIgnore]
         public EventDto Event { get; set; }
         public int MaxPlaces { get; set; }
+
+        public int Availability
+        {
+            get
+            {
+                return MaxPlaces - Appointments.Count(el => el.IsActif);
+            }
+        }
     }
 }
