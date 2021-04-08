@@ -19,7 +19,7 @@ namespace mosquebookapi.Data.Repositories.Implementation
             _dbSet = _context.Set<T>();
         }
 
-        public void Add(T entity)
+        public virtual void Add(T entity)
         {
             _dbSet.Add(entity);
         }

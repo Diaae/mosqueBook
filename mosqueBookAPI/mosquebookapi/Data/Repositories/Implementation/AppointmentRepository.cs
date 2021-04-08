@@ -13,5 +13,11 @@ namespace mosquebookapi.Data.Repositories.Implementation
         {
                 
         }
+        public override void Add(Appointment appointment)
+        {
+            _context.Attach(appointment.Group);
+            _context.Attach(appointment.User);
+            base.Add(appointment);
+        }
     }
 }

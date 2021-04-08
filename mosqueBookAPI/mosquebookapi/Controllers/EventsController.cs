@@ -31,7 +31,7 @@ namespace mosquebookapi.Controllers
 
         // GET api/<EventsController>/5
         [HttpGet("{id}")]
-        public async Task<EventDto> Get(Guid id)
+        public async Task<EventDto> Get(Guid id,DateTime date)
         {
             return await _eventService.FindById(id);
         }

@@ -44,6 +44,12 @@ namespace mosquebookapi.Services
 
             return _mapper.Map<EventDto>(@event);
         }
+        public async Task<EventDto> FindByIdAndDate(Guid id,DateTime date)
+        {
+            var @event =  _eventRepository.FindByIdAndDate(id,date);
+
+            return _mapper.Map<EventDto>(@event);
+        }
 
         public async Task Remove(Guid eventId)
         {
