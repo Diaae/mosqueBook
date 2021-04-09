@@ -85,7 +85,7 @@ export default {
       events: [],
       fields: [
         {
-          key: "eventType",
+          key: "name",
           label: "Event Type",
           sortable: true,
           sortDirection: "desc",
@@ -122,7 +122,7 @@ export default {
     },
   },
   mounted() {
-    api.fetch("events", (response) => {
+    api.fetch("eventTypes", (response) => {
       this.events = response.data;
       this.totalRows = this.events.length;
       console.log(response);
