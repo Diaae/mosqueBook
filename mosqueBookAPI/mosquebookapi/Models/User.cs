@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 namespace mosquebookapi.Models
 {
     [Index(nameof(Email), IsUnique = true)]
+    [Index(nameof(PhoneNumber), IsUnique = true)]
     [Table("User")]
     public partial class User : EntityBase<Guid>
     {
