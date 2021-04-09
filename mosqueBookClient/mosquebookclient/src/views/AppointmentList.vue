@@ -80,9 +80,9 @@
 </template>
 
 <script>
-import api from "../shared/data.service";
+// import api from "../shared/data.service";
 export default {
-  name: "Events",
+  name: "AppointmentList",
   data() {
     return {
       events: [],

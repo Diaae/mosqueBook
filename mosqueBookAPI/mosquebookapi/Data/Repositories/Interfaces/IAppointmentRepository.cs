@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace mosquebookapi.Data.Repositories.Interfaces
 {
-    public interface IAppointmentRepository:IGenericRepository<Appointment>
+    public interface IAppointmentRepository : IGenericRepository<Appointment>
     {
-
-        
+        Appointment FindByToken(Guid token);
+        IEnumerable<Appointment> ListAllByGroupId(Guid groupId);
     }
 }
