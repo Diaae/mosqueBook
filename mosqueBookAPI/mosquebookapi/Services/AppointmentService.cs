@@ -38,15 +38,32 @@ namespace mosquebookapi.Services
             if(user == null)
             {
                 _userRepository.Add(appointment.User);
-                 _unitOfWork.CommitAsync();
-
-
+                _unitOfWork.CommitAsync();
+            }
+            else
+            {
+                appointment.User = user;
             }
             appointment.Token = Guid.NewGuid();
             appointment.IsActif = true;
-            _appointmentRepository.Add(appointment);
+            _appointmentRepository.Update(appointment);
 
             return _unitOfWork.CommitAsync();
+
+        }
+
+        public AppointmentDto FindByToken(Guid token)
+        {
+            var appointment= _appointmentRepository.FindByToken(token);
+            return _mapper.Map<AppointmentDto>(appointment);
+        }
+
+        public IEnumerable<AppointmentDto> ListAllByGroupId(Guid groupId)
+        {
+
+            var appointments = _appointmentRepository.ListAllByGroupId(groupId);
+
+            return _mapper.Map<IEnumerable<AppointmentDto>>(appointments);
 
         }
     }

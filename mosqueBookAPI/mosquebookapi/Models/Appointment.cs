@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace mosquebookapi.Models
 {
-    [Index(nameof(Date), IsUnique = true)]
+    [Index(nameof(Date),"UserId", IsUnique = true)]
     [Index(nameof(Token), IsUnique = true)]
     [Table("Appointment")]
     public partial class Appointment : EntityBase<Guid>

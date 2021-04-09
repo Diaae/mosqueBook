@@ -11,7 +11,7 @@ namespace mosquebookapi.Data.Repositories.Interfaces
     {
         Task<T> FindById(Guid itemId);
         Task<IEnumerable<T>> ListAll();
-        Task<IEnumerable<T>> Where(Expression<Func<T, bool>> expression);
+        IQueryable<T> Where(Expression<Func<T, bool>> expression);
         bool Exists(T entity);
         void Add(T entity);
         void Update(T entity);

@@ -9,6 +9,6 @@ namespace mosquebookapi.Data.Repositories.Interfaces
     public interface IEventRepository : IGenericRepository<Event>
     {
         void Save(Event @event);
-        Event FindByIdAndDate(Guid id, DateTime date);
+        Event FindByEventTypeIdAndDate(Guid eventTypeId, DateTime date);
     }
 }

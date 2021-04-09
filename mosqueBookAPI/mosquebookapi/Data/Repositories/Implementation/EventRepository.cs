@@ -14,9 +14,9 @@ namespace mosquebookapi.Data.Repositories.Implementation
         {
         }
 
-        public Event FindByIdAndDate(Guid id, DateTime date)
+        public Event FindByEventTypeIdAndDate(Guid eventTypeId, DateTime date)
         {
-           return _context.Events.SingleOrDefault(ev => ev.Id == id && ev.Date.Day == date.Day && ev.Date.Month == date.Month && ev.Date.Year == date.Year);
+           return _context.Events.SingleOrDefault(ev => ev.EventType.Id == eventTypeId && ev.Date.Day == date.Day && ev.Date.Month == date.Month && ev.Date.Year == date.Year);
         }
 
         public void Save(Event @event)

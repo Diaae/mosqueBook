@@ -30,10 +30,17 @@ namespace mosquebookapi.Controllers
         }
 
         // GET api/<EventsController>/5
-        [HttpGet("{id}")]
-        public async Task<EventDto> Get(Guid id,DateTime date)
+        [HttpGet("{eventTypeId}")]
+        public IActionResult Get(Guid eventTypeId, [FromQuery]DateTime date)
         {
-            return await _eventService.FindById(id);
+            var @event =  _eventService.FindByEventTypeIdAndDate(eventTypeId, date);
+            if(@event == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(@event);
+
         }
 
 
