@@ -1,7 +1,11 @@
 <template>
   <b-container>
 
-
+    <b-row class="mb-5 text-center"> 
+        <b-col>
+          <span> eventName, eventGroup, eventDate  </span>
+        </b-col>
+    </b-row>
     <!-- Main table element -->
     <b-table
       head-variant="dark"
