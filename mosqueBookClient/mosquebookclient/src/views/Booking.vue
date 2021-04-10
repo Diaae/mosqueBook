@@ -10,7 +10,6 @@
               class="mb-2"
               @input="onDateChange()"
               v-model="appointment.date"
-              :variant="dateVariant"
             ></b-form-datepicker>
           </b-form-group>
         </b-col>
@@ -154,7 +153,7 @@ export default {
       console.log(error);
        this.isDisabled = false;
         if(error.response && error.response.status == 500 ){
-          this.makeToast("You have already boocked at this date please check your confirmation mail","warning");
+          this.makeToast("You have already booked at this date please check your confirmation mail","warning");
 
         }
       });
@@ -203,7 +202,6 @@ export default {
     makeToast(message,variant = null) {
       this.$bvToast.toast(message, {
       title: `${variant}`,
-      dateVariant: "Warning",
       solid: true
       });
     },

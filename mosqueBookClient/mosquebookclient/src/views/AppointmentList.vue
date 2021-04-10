@@ -1,30 +1,6 @@
 <template>
   <b-container>
-    <b-row>
-      <b-col md="6" class="my-1">
-        <b-form-group label-cols-sm="3" label="Filter" class="mb-0">
-          <b-input-group>
-            <b-form-input
-              v-model="filter"
-              placeholder="Input a value"
-            ></b-form-input>
-            <b-input-group-append>
-              <b-button :disabled="!filter" @click="filter = ''"
-                >Clear</b-button
-              >
-            </b-input-group-append>
-          </b-input-group>
-        </b-form-group>
-      </b-col>
-      <b-col md="6" class="my-1">
-        <b-form-group label-cols-sm="3" label="Per page" class="mb-0">
-          <b-form-select
-            v-model="perPage"
-            :options="pageOptions"
-          ></b-form-select>
-        </b-form-group>
-      </b-col>
-    </b-row>
+
 
     <!-- Main table element -->
     <b-table
@@ -66,16 +42,6 @@
       
     </b-table>
 
-    <b-row>
-      <b-col md="6" class="my-1">
-        <b-pagination
-          v-model="currentPage"
-          :total-rows="totalRows"
-          :per-page="perPage"
-          class="my-0"
-        ></b-pagination>
-      </b-col>
-    </b-row>
   </b-container>
 </template>
 

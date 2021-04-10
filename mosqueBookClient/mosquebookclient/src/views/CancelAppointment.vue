@@ -157,7 +157,9 @@ export default {
   methods: {
     onCancel() {},
 
-    search(){},
+    search(
+        
+    ){},
 
     redirectStatus(){
         return this.redirect = true;
@@ -173,9 +175,6 @@ export default {
       api.fetch("events/" + this.$route.params.eventId, (response) => {
         console.log(response);
         this.event = response.data;
-        if (!this.event.length) {
-          alert("NOTHIING");
-        }
 
         this.event.groups.forEach((element) => {
           this.dropdownGroups.push({
