@@ -9,7 +9,7 @@
               placeholder="Please enter your booking token here"
             ></b-form-input>
             <b-input-group-append>
-              <b-button @click="search">Ok</b-button>
+              <b-button @click="search" variant="dark">Ok</b-button>
             </b-input-group-append>
           </b-input-group>
         </b-form-group>
@@ -136,7 +136,7 @@ export default {
   data() {
     return {
       event: {},
-      show: true,
+      show: false,
       isDisabled: true,
       selectedGroupId: null,
       bToken: null,
