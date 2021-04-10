@@ -45,7 +45,7 @@
     >
       <template #table-busy class="text-center text-danger my-2">
         <b-spinner class="align-middle"></b-spinner>
-        <strong>Chargement...</strong>
+        <strong>Loading...</strong>
       </template>
 
 

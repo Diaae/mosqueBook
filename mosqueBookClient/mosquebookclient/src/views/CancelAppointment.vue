@@ -1,6 +1,22 @@
 <template>
   <b-container>
-    <b-form @submit="onSubmit" v-if="show">
+    <b-row>
+      <b-col md="6" class="my-1">
+        <b-form-group label-cols-sm="3" label="Booking Token:" class="mb-50">
+          <b-input-group>
+            <b-form-input
+              v-model="bToken"
+              placeholder="Please enter your booking token here"
+            ></b-form-input>
+            <b-input-group-append>
+              <b-button @click="search">Ok</b-button>
+            </b-input-group-append>
+          </b-input-group>
+        </b-form-group>
+      </b-col>
+    </b-row>
+
+    <b-form @submit="onCancel" v-if="show">
       <!-- Date -->
       <b-row>
         <b-col md="6">
@@ -8,9 +24,8 @@
             <b-form-datepicker
               id="bookingDate"
               class="mb-2"
-              @input="onDateChange()"
               v-model="appointment.date"
-              :variant="dateVariant"
+              :disabled="isDisabled"
             ></b-form-datepicker>
           </b-form-group>
         </b-col>
@@ -25,21 +40,9 @@
               :disabled="isDisabled"
               :options="dropdownGroups"
               v-model="selectedGroupId"
-              @change="changeInAvailability()"
             >
             </b-select>
           </b-form-group>
-        </b-col>
-      </b-row>
-      <!-- Availability -->
-      <b-row>
-        <b-col md="6">
-          <b-alert
-            :variant="availabilityStatus.variant"
-            :show="availabilityIsShown"
-          >
-            {{ availabilityStatus.message }}
-          </b-alert>
         </b-col>
       </b-row>
 
@@ -98,16 +101,36 @@
         ></b-form-input>
       </b-form-group>
 
-      <b-button variant="dark" :disabled="isDisabled" type="submit">
-        Book Now</b-button
+      <b-button
+        type="submit"
+        variant="danger"
+        @click="$bvModal.show('cancelConfirmation')"
+      >
+        Cancel Booking</b-button
       >
     </b-form>
+
+    <div>
+      <b-modal id="cancelConfirmation" hide-footer>
+        <template #modal-title> Booking cancelled </template>
+            <div class="d-block text-center">
+                <h3>Your booking was cancelled successfully</h3>
+             </div>
+        <b-button
+          class="mt-3"
+          block
+          @click="$bvModal.hide('cancelConfirmation'); finalRedirection();"
+          variant="success"
+          :redirect="redirect"
+          >Close</b-button
+        >
+      </b-modal>
+    </div>
   </b-container>
 </template>
 
 <script>
 import api from "../shared/data.service";
-
 export default {
   name: "Booking",
   data() {
@@ -115,9 +138,8 @@ export default {
       event: {},
       show: true,
       isDisabled: true,
-      availabilityIsShown: false,
       selectedGroupId: null,
-      availability: null,
+      bToken: null,
       appointment: {
         date: "",
         selectedGroup: {},
@@ -131,59 +153,36 @@ export default {
       dropdownGroups: [],
     };
   },
-  computed: {
-    availabilityStatus() {
-      return this.availability == 0
-        ? {
-            variant: "danger",
-            message: "There are no available places in this group",
-          }
-        : {
-            variant: "success",
-            message: `${this.availability} places are still available`,
-          };
-    },
-  },
+
   methods: {
-    onSubmit() {},
-    onDateChange() {
-      this.availabilityIsShown = false;
-      if (this.appointment.date) {
-        this.isDisabled = false;
-      }
-      this.getGroupsByEvent();
+    onCancel() {},
+
+    search(){},
+
+    redirectStatus(){
+        return this.redirect = true;
     },
-    changeInAvailability() {
-      if (this.selectedGroupId == null) {
-        return;
-      }
-      this.appointment.selectedGroup = this.event.groups.find(
-        (element) => element.id == this.selectedGroupId
-      );
-      this.availabilityIsShown = true;
-      this.availability = this.appointment.selectedGroup.availability;
+
+    finalRedirection(){
+        this.$router.push({
+            name: "Events"
+        })
     },
+
     getGroupsByEvent() {
       api.fetch("events/" + this.$route.params.eventId, (response) => {
         console.log(response);
         this.event = response.data;
+        if (!this.event.length) {
+          alert("NOTHIING");
+        }
 
-        this.dropdownGroups = [
-          { value: null, text: "Please select a group" },
-        ];
         this.event.groups.forEach((element) => {
           this.dropdownGroups.push({
             text: element.name,
             value: element.id,
           });
         });
-      });
-    },
-    dateToast(variant = null) {
-      this.$bvToast.toast('There is no event in this date, please select another date', {
-      title: `${variant}`,
-      dateVariant: "Warning",
-      solid: true
       });
     },
   },
