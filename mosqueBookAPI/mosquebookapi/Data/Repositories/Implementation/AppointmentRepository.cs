@@ -13,5 +13,22 @@ namespace mosquebookapi.Data.Repositories.Implementation
         {
                 
         }
+
+        public Appointment FindByToken(Guid token)
+        {
+            return _context.Appointments.SingleOrDefault(a => a.Token == token);
+        }
+
+        public IEnumerable<Appointment> ListAllByGroupId(Guid groupId)
+        {
+           return Where(a => a.Group.Id == groupId).Distinct().ToList();
+        }
+
+        public override void Update(Appointment appointment)
+        {
+            _context.Attach(appointment.Group);
+            _context.Attach(appointment.User);
+            base.Update(appointment);
+        }
     }
 }

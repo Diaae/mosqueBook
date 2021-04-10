@@ -10,11 +10,11 @@ namespace mosquebookapi.Dto
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
+        [JsonIgnore]
         public  IEnumerable<AppointmentDto> Appointments { get; set; }
         [JsonIgnore]
         public EventDto Event { get; set; }
         public int MaxPlaces { get; set; }
-
         public int Availability
         {
             get

@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using mosquebookapi.Data;
 
 namespace mosquebookapi.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20210408210038_AddUniqueIndexPhoneNumber")]
+    partial class AddUniqueIndexPhoneNumber
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -23,8 +25,8 @@ namespace mosquebookapi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid?>("EventId")
-                        .HasColumnType("char(36)");
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<Guid?>("GroupId")
                         .HasColumnType("char(36)");
@@ -40,15 +42,15 @@ namespace mosquebookapi.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Date")
+                        .IsUnique();
+
                     b.HasIndex("GroupId");
 
                     b.HasIndex("Token")
                         .IsUnique();
 
                     b.HasIndex("UserId");
-
-                    b.HasIndex("EventId", "UserId")
-                        .IsUnique();
 
                     b.ToTable("Appointment");
                 });
@@ -83,7 +85,7 @@ namespace mosquebookapi.Migrations
                         new
                         {
                             Id = new Guid("ee48fa11-be9a-4885-a244-98a0aedfbea5"),
-                            Date = new DateTime(2021, 4, 12, 2, 32, 12, 115, DateTimeKind.Local).AddTicks(3324),
+                            Date = new DateTime(2021, 4, 11, 22, 0, 38, 78, DateTimeKind.Local).AddTicks(3857),
                             Description = "tarawih 1",
                             EventTypeId = new Guid("d5d109a9-ac86-40ef-a783-b3c0b8fefaa1"),
                             MosqueId = new Guid("1a82c06a-4986-4ed3-b1dd-05271b4931d8")
@@ -91,7 +93,7 @@ namespace mosquebookapi.Migrations
                         new
                         {
                             Id = new Guid("802e14d4-7c79-4740-aefc-6bf5b412129c"),
-                            Date = new DateTime(2021, 4, 16, 2, 32, 12, 118, DateTimeKind.Local).AddTicks(7621),
+                            Date = new DateTime(2021, 4, 15, 22, 0, 38, 80, DateTimeKind.Local).AddTicks(5602),
                             Description = "tarawih 7",
                             EventTypeId = new Guid("d5d109a9-ac86-40ef-a783-b3c0b8fefaa1"),
                             MosqueId = new Guid("1a82c06a-4986-4ed3-b1dd-05271b4931d8")
@@ -231,10 +233,6 @@ namespace mosquebookapi.Migrations
 
             modelBuilder.Entity("mosquebookapi.Models.Appointment", b =>
                 {
-                    b.HasOne("mosquebookapi.Models.Event", "Event")
-                        .WithMany()
-                        .HasForeignKey("EventId");
-
                     b.HasOne("mosquebookapi.Models.EventGroup", "Group")
                         .WithMany("Appointments")
                         .HasForeignKey("GroupId");
@@ -242,8 +240,6 @@ namespace mosquebookapi.Migrations
                     b.HasOne("mosquebookapi.Models.User", "User")
                         .WithMany("Appointments")
                         .HasForeignKey("UserId");
-
-                    b.Navigation("Event");
 
                     b.Navigation("Group");
 

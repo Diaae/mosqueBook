@@ -10,6 +10,10 @@ namespace mosquebookapi.Dto
         public Guid Id { get; set; }
         public Guid Token { get; set; }
         public bool IsActif { get; set; }
-        public DateTime Date { get; set; }
+        public EventLightDto Event { get; set; }
+
+        public UserDto User { get; set; }
+
+        public EventGroupDto Group { get; set; }
     }
 }

@@ -17,6 +17,7 @@ namespace mosquebookapi.Data
             CreateMap<Mosque, MosqueDto>().ReverseMap();
             CreateMap<EventType, EventTypeDto>().ReverseMap();
             CreateMap<Event, EventDto>().ReverseMap();
+            CreateMap<Event, EventLightDto>().ReverseMap();
             CreateMap<Appointment, AppointmentDto>().ReverseMap();
             CreateMap<EventGroup, EventGroupDto>().ReverseMap();
         }

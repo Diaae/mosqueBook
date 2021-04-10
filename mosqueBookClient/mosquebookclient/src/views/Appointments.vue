@@ -45,20 +45,33 @@
     >
       <template #table-busy class="text-center text-danger my-2">
         <b-spinner class="align-middle"></b-spinner>
-        <strong>Loading...</strong>
+        <strong>Chargement...</strong>
       </template>
 
+      <template #cell(groups)="row">
+              <b-select
+              id="selectGroup"
+              text="Select a group"
+              block
+              variant="primary"
+              :options="row.item.groups"
+              value-field="id"
+              text-field="name"
+            >
+            </b-select>
+      </template>
 
       <template #cell(eventType)="row">
         {{ row.value.name }}
       </template>
       <template #cell(actions)="row">
         <b-button
+          disabled
           variant="primary mr-1"
           v-b-modal.modal-moteur
           @click="Book(row.item.id)"
         >
-          Book
+          Print
         </b-button>
       </template>
     </b-table>
@@ -85,14 +98,15 @@ export default {
       events: [],
       fields: [
         {
-          key: "name",
+          key: "eventType",
           label: "Event Type",
           sortable: true,
           sortDirection: "desc",
         },
+        { key: "date", label: "Date", sortable: true, class: "text-center" },
         {
-          key: "description",
-          label: "Description",
+          key: "groups",
+          label: "Groups",
           sortable: true,
           class: "text-center",
         },
@@ -106,6 +120,7 @@ export default {
       sortDesc: false,
       sortDirection: "asc",
       filter: null,
+      dropdownGroups : []
     };
   },
   methods: {
@@ -122,9 +137,10 @@ export default {
     },
   },
   mounted() {
-    api.fetch("eventTypes", (response) => {
+    api.fetch("events", (response) => {
       this.events = response.data;
       this.totalRows = this.events.length;
+
       console.log(response);
     });
   },

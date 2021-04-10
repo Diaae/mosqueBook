@@ -1,6 +1,6 @@
 <template>
   <b-container>
-    <b-form @submit="onSubmit" v-if="show">
+    <b-form  v-if="show">
       <!-- Date -->
       <b-row>
         <b-col md="6">
@@ -98,7 +98,7 @@
         ></b-form-input>
       </b-form-group>
 
-      <b-button variant="dark" :disabled="isDisabled" type="submit">
+      <b-button variant="dark" :disabled="isDisabled" @click="bookNow()">
         Book Now</b-button
       >
     </b-form>
@@ -112,7 +112,7 @@ export default {
   name: "Booking",
   data() {
     return {
-      event: {},
+      event: null,
       show: true,
       isDisabled: true,
       availabilityIsShown: false,
@@ -120,7 +120,7 @@ export default {
       availability: null,
       appointment: {
         date: "",
-        selectedGroup: {},
+        group: {},
         user: {
           firstName: "",
           lastName: "",
@@ -145,7 +145,21 @@ export default {
     },
   },
   methods: {
-    onSubmit() {},
+    bookNow() {
+       this.isDisabled = true;
+      console.log(this.appointment);
+    api.post("appointments",this.appointment,(response)=>{
+      console.log(response);
+    },(error)=>{
+      console.log(error);
+       this.isDisabled = false;
+        if(error.response && error.response.status == 500 ){
+          this.makeToast("You have already boocked at this date please check your confirmation mail","warning");
+
+        }
+      });
+
+    },
     onDateChange() {
       this.availabilityIsShown = false;
       if (this.appointment.date) {
@@ -157,17 +171,18 @@ export default {
       if (this.selectedGroupId == null) {
         return;
       }
-      this.appointment.selectedGroup = this.event.groups.find(
+      this.appointment.group = this.event.groups.find(
         (element) => element.id == this.selectedGroupId
       );
+      console.log(this.appointment.group);
       this.availabilityIsShown = true;
-      this.availability = this.appointment.selectedGroup.availability;
+      this.availability = this.appointment.group.availability;
     },
     getGroupsByEvent() {
-      api.fetch("events/" + this.$route.params.eventId, (response) => {
+      console.log(this.appointment.date);
+      api.fetch(`events/${this.$route.params.eventId}?date=${this.appointment.date}`, (response) => {
         console.log(response);
         this.event = response.data;
-
         this.dropdownGroups = [
           { value: null, text: "Please select a group" },
         ];
@@ -177,10 +192,16 @@ export default {
             value: element.id,
           });
         });
+      },(error)=>{
+        if(error.response && error.response.status == 404)
+          this.makeToast('There is no event in this date, please select another date',"danger");
+          this.isDisabled = true;
+          this.dropdownGroups = [];
+          this.event = null;
       });
     },
-    dateToast(variant = null) {
-      this.$bvToast.toast('There is no event in this date, please select another date', {
+    makeToast(message,variant = null) {
+      this.$bvToast.toast(message, {
       title: `${variant}`,
       dateVariant: "Warning",
       solid: true

@@ -45,22 +45,25 @@
     >
       <template #table-busy class="text-center text-danger my-2">
         <b-spinner class="align-middle"></b-spinner>
-        <strong>Loading...</strong>
+        <strong>Chargement...</strong>
       </template>
 
+      <template #cell(FirstName)="row">
+        {{ row.value }}
+      </template>
 
-      <template #cell(eventType)="row">
-        {{ row.value.name }}
+       <template #cell(LastName)="row">
+        {{ row.value }}
       </template>
-      <template #cell(actions)="row">
-        <b-button
-          variant="primary mr-1"
-          v-b-modal.modal-moteur
-          @click="Book(row.item.id)"
-        >
-          Book
-        </b-button>
+
+       <template #cell(Email)="row">
+        {{ row.value }}
       </template>
+
+       <template #cell(PhoneNumber)="row">
+        {{ row.value }}
+      </template>
+      
     </b-table>
 
     <b-row>
@@ -77,26 +80,42 @@
 </template>
 
 <script>
-import api from "../shared/data.service";
+// import api from "../shared/data.service";
 export default {
-  name: "Events",
+  name: "AppointmentList",
   data() {
     return {
       events: [],
       fields: [
         {
-          key: "name",
-          label: "Event Type",
+          key: "FirstName",
+          label: "First name",
           sortable: true,
           sortDirection: "desc",
+            class: "text-center",
+        },
+        { key: "LastName", label: "Late name", sortable: true,  sortDirection: "desc"  , class: "text-center",},
+          {
+          key: "FirstName",
+          label: "First name",
+          sortable: true,
+          sortDirection: "desc",
+            class: "text-center"
         },
         {
-          key: "description",
-          label: "Description",
+          key: "Email",
+          label: "Email",
           sortable: true,
+           sortDirection: "desc",
           class: "text-center",
         },
-        { key: "actions", label: "Actions" },
+        {
+          key: "PhoneNumber",
+          label: "Phone number",
+          sortable: true,
+           sortDirection: "desc",
+          class: "text-center",
+        },
       ],
       totalRows: 1,
       currentPage: 1,
@@ -114,19 +133,14 @@ export default {
       this.totalRows = filteredItems.length;
       this.currentPage = 1;
     },
-    Book(eventId) {
-      this.$router.push({
-        name: "Booking",
-        params: { eventId },
-      });
-    },
   },
   mounted() {
-    api.fetch("eventTypes", (response) => {
-      this.events = response.data;
-      this.totalRows = this.events.length;
-      console.log(response);
-    });
+    // api.fetch("events", (response) => {
+    //   this.events = response.data;
+    //   this.totalRows = this.events.length;
+
+    //   console.log(response);
+    // });
   },
 };
 </script>

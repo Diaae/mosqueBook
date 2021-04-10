@@ -13,6 +13,9 @@ namespace mosquebookapi.Data.Repositories.Implementation {
         {
         }
 
-       
+        public User FindByEmail(string email)
+        {
+            return _context.Users.SingleOrDefault(us => us.Email == email);
+        }
     }
 }

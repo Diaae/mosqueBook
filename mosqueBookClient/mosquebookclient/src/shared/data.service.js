@@ -12,7 +12,7 @@ export default {
     // instance.post(url, object, config).then(callbackSuccess).catch(callbackError);
     instance.post(url, object).then(callbackSuccess).catch(callbackError);
   },
-  fetch: (url, callback) => instance.get(url).then(callback)
+  fetch: (url, callback,error) => instance.get(url).then(callback).catch(error)
 //   .catch(callbackError === undefined ? (error) => {
 //  // fetch: (url, callback, callbackError) => instance.get(url, config).then(callback).catch(callbackError === undefined ? (error) => {
 //     if(error.response!== undefined) {

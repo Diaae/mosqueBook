@@ -19,7 +19,7 @@ namespace mosquebookapi.Data.Repositories.Implementation
             _dbSet = _context.Set<T>();
         }
 
-        public void Add(T entity)
+        public virtual void Add(T entity)
         {
             _dbSet.Add(entity);
         }
@@ -47,14 +47,14 @@ namespace mosquebookapi.Data.Repositories.Implementation
             return await _dbSet.ToListAsync();
         }
 
-        public void Update(T item)
+        public virtual void Update(T item)
         {
             _dbSet.Update(item);
         }
 
-        public async Task<IEnumerable<T>> Where(Expression<Func<T, bool>> expression)
+        public  IQueryable<T> Where(Expression<Func<T, bool>> expression)
         {
-           return await _dbSet.Where(expression).ToListAsync();
+           return  _dbSet.Where(expression);
         }
 
         public bool Exists(T entity)
