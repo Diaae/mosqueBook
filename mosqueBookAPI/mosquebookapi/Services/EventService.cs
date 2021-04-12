@@ -38,6 +38,8 @@ namespace mosquebookapi.Services
             return await _uow.CommitAsync();
         }
 
+     
+
         public async Task<EventDto> FindById(Guid id)
         {
             var @event = await _eventRepository.FindById(id);

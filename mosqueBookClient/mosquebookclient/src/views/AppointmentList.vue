@@ -1,10 +1,9 @@
 <template>
   <b-container>
-
-    <b-row class="mb-5 text-center"> 
-        <b-col>
-          <span> eventName, eventGroup, eventDate  </span>
-        </b-col>
+    <b-row class="mb-5 text-center">
+      <b-col>
+        <span v-if="appointments.length"> {{ appointments[0].event.eventType.name}}, {{appointments[0].group.name}}, {{formatDate(appointments[0].event.date)}} </span>
+      </b-col>
     </b-row>
     <!-- Main table element -->
     <b-table
@@ -13,15 +12,13 @@
       hover
       show-empty
       stacked="md"
-      :items="events"
+      :items="appointments"
       :fields="fields"
-      :current-page="currentPage"
-      :per-page="perPage"
+      :per-page="0"
       :filter="filter"
       :sort-by.sync="sortBy"
       :sort-desc.sync="sortDesc"
       :sort-direction="sortDirection"
-      @filtered="onFiltered"
     >
       <template #table-busy class="text-center text-danger my-2">
         <b-spinner class="align-middle"></b-spinner>
@@ -29,66 +26,72 @@
       </template>
 
       <template #cell(FirstName)="row">
-        {{ row.value }}
+        {{ row.item.user.firstName }}
       </template>
 
-       <template #cell(LastName)="row">
-        {{ row.value }}
+      <template #cell(LastName)="row">
+        {{ row.item.user.lastName }}
       </template>
 
-       <template #cell(Email)="row">
-        {{ row.value }}
+      <template #cell(Email)="row">
+        {{ row.item.user.email  }}
       </template>
 
-       <template #cell(PhoneNumber)="row">
-        {{ row.value }}
+      <template #cell(PhoneNumber)="row">
+        {{  row.item.user.phoneNumber }}
       </template>
       
-    </b-table>
+      <template #cell(Signature)="">
 
+      </template>
+    </b-table>
   </b-container>
 </template>
 
 <script>
-// import api from "../shared/data.service";
+import api from "../shared/data.service";
 export default {
   name: "AppointmentList",
   data() {
     return {
-      events: [],
+      appointments: [],
       fields: [
         {
           key: "FirstName",
           label: "First name",
           sortable: true,
           sortDirection: "desc",
-            class: "text-center",
+          class: "text-center",
         },
-        { key: "LastName", label: "Late name", sortable: true,  sortDirection: "desc"  , class: "text-center",},
-          {
-          key: "FirstName",
-          label: "First name",
+        {
+          key: "LastName",
+          label: "Late name",
           sortable: true,
           sortDirection: "desc",
-            class: "text-center"
+          class: "text-center",
         },
         {
           key: "Email",
           label: "Email",
           sortable: true,
-           sortDirection: "desc",
+          sortDirection: "desc",
           class: "text-center",
         },
         {
           key: "PhoneNumber",
           label: "Phone number",
           sortable: true,
-           sortDirection: "desc",
+          sortDirection: "desc",
           class: "text-center",
         },
+        {
+          key: "Signature",
+          label: "Signature",
+          sortable: false,
+          class: "text-center",
+        }
       ],
       totalRows: 1,
-      currentPage: 1,
       perPage: 5,
       pageOptions: [5, 10, 15],
       sortBy: null,
@@ -103,14 +106,23 @@ export default {
       this.totalRows = filteredItems.length;
       this.currentPage = 1;
     },
+     formatDate(date) {
+        let formatTime = (time) => {
+          return time < 10 ? '0' + time.toString() : time.toString()
+        };
+        date = new Date(date);
+        return date.toLocaleDateString() + ' ' + formatTime(date.getHours()) + ':' + formatTime(date.getMinutes()) + ':' + formatTime(date.getSeconds());
+      }
   },
   mounted() {
-    // api.fetch("events", (response) => {
-    //   this.events = response.data;
-    //   this.totalRows = this.events.length;
+    let eventId = this.$route.params.eventId;
+    let groupId = this.$route.params.groupId;
+    api.fetch(`Appointments/event/${eventId}/group/${groupId}`, (response) => {
+      this.appointments = response.data;
+      this.totalRows = this.appointments.length;
 
-    //   console.log(response);
-    // });
+      console.log(response);
+    });
   },
 };
 </script>

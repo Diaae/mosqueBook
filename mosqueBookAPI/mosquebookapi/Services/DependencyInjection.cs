@@ -14,6 +14,8 @@ namespace mosquebookapi.Services
             services.AddScoped<EventTypeService>();
             services.AddScoped<EventGroupService>();
             services.AddScoped<AppointmentService>();
+            services.AddScoped<UserService>();
+            services.AddScoped<TemporaryAuthenticator>();
             return services;
         }
     }

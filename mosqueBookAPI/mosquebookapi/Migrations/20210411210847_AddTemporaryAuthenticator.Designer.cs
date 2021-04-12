@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using mosquebookapi.Data;
 
 namespace mosquebookapi.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20210411210847_AddTemporaryAuthenticator")]
+    partial class AddTemporaryAuthenticator
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,9 +70,14 @@ namespace mosquebookapi.Migrations
                     b.Property<Guid?>("EventTypeId")
                         .HasColumnType("char(36)");
 
+                    b.Property<Guid?>("MosqueId")
+                        .HasColumnType("char(36)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("EventTypeId");
+
+                    b.HasIndex("MosqueId");
 
                     b.ToTable("Event");
 
@@ -78,16 +85,18 @@ namespace mosquebookapi.Migrations
                         new
                         {
                             Id = new Guid("ee48fa11-be9a-4885-a244-98a0aedfbea5"),
-                            Date = new DateTime(2021, 4, 15, 22, 20, 46, 241, DateTimeKind.Local).AddTicks(5628),
+                            Date = new DateTime(2021, 4, 14, 23, 8, 46, 844, DateTimeKind.Local).AddTicks(3248),
                             Description = "tarawih 1",
-                            EventTypeId = new Guid("d5d109a9-ac86-40ef-a783-b3c0b8fefaa1")
+                            EventTypeId = new Guid("d5d109a9-ac86-40ef-a783-b3c0b8fefaa1"),
+                            MosqueId = new Guid("1a82c06a-4986-4ed3-b1dd-05271b4931d8")
                         },
                         new
                         {
                             Id = new Guid("802e14d4-7c79-4740-aefc-6bf5b412129c"),
-                            Date = new DateTime(2021, 4, 19, 22, 20, 46, 243, DateTimeKind.Local).AddTicks(6933),
+                            Date = new DateTime(2021, 4, 18, 23, 8, 46, 846, DateTimeKind.Local).AddTicks(3949),
                             Description = "tarawih 7",
-                            EventTypeId = new Guid("d5d109a9-ac86-40ef-a783-b3c0b8fefaa1")
+                            EventTypeId = new Guid("d5d109a9-ac86-40ef-a783-b3c0b8fefaa1"),
+                            MosqueId = new Guid("1a82c06a-4986-4ed3-b1dd-05271b4931d8")
                         });
                 });
 
@@ -139,15 +148,10 @@ namespace mosquebookapi.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<Guid?>("MosqueId")
-                        .HasColumnType("char(36)");
-
                     b.Property<string>("Name")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("MosqueId");
 
                     b.ToTable("EventType");
 
@@ -212,7 +216,7 @@ namespace mosquebookapi.Migrations
                         new
                         {
                             Id = 1,
-                            Token = new Guid("fca6c19c-7b03-4557-b5c4-327ef8771f05")
+                            Token = new Guid("42959ca4-174b-46b8-9dd4-b45621117079")
                         });
                 });
 
@@ -278,7 +282,13 @@ namespace mosquebookapi.Migrations
                         .WithMany("Events")
                         .HasForeignKey("EventTypeId");
 
+                    b.HasOne("mosquebookapi.Models.Mosque", "Mosque")
+                        .WithMany("Events")
+                        .HasForeignKey("MosqueId");
+
                     b.Navigation("EventType");
+
+                    b.Navigation("Mosque");
                 });
 
             modelBuilder.Entity("mosquebookapi.Models.EventGroup", b =>
@@ -288,15 +298,6 @@ namespace mosquebookapi.Migrations
                         .HasForeignKey("EventId");
 
                     b.Navigation("Event");
-                });
-
-            modelBuilder.Entity("mosquebookapi.Models.EventType", b =>
-                {
-                    b.HasOne("mosquebookapi.Models.Mosque", "Mosque")
-                        .WithMany("Events")
-                        .HasForeignKey("MosqueId");
-
-                    b.Navigation("Mosque");
                 });
 
             modelBuilder.Entity("mosquebookapi.Models.Event", b =>

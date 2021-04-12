@@ -13,9 +13,14 @@ namespace mosquebookapi.Data.Repositories.Implementation {
         {
         }
 
-        public User FindByEmail(string email)
+        public User FindByEmailAndPassword(string email, string password)
         {
-            return _context.Users.SingleOrDefault(us => us.Email == email);
+            return _context.Users.SingleOrDefault(us => us.Email == email && us.Password == password);
+        }
+
+        public User FindByPhoneNumber(string email)
+        {
+            return _context.Users.SingleOrDefault(us => us.PhoneNumber == email);
         }
     }
 }

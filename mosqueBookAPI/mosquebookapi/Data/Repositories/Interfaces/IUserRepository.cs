@@ -8,6 +8,7 @@ namespace mosquebookapi.Data.Repositories.Interfaces
 {
     public interface IUserRepository : IGenericRepository<User>
     {
-        User FindByEmail(string email);
+        User FindByPhoneNumber(string email);
+        User FindByEmailAndPassword(string email, string password);
     }
 }

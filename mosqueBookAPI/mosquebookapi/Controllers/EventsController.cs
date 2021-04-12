@@ -28,6 +28,9 @@ namespace mosquebookapi.Controllers
         {
             return await _eventService.ListAll();
         }
+        // GET: api/<EventsController>
+       
+
 
         // GET api/<EventsController>/5
         [HttpGet("{eventTypeId}")]

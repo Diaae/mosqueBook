@@ -11,8 +11,7 @@ namespace mosquebookapi.Dto
         public  EventTypeDto EventType { get; set; }
         public string Description { get; set; }
         public DateTime Date { get; set; }
-        public  MosqueDto Mosque { get; set; }
-        public virtual IEnumerable<EventGroupDto> Groups { get; set; }
+        public  IEnumerable<EventGroupDto> Groups { get; set; }
         public int Availability { get
             {
                 var tuple = Groups.Select(g => g.MaxPlaces - g.Appointments.Count(el => el.IsActif));

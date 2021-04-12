@@ -25,6 +25,11 @@ namespace mosquebookapi.Controllers
         public IEnumerable<AppointmentDto> ListByGroupId(Guid groupId)
         {
             return _appointmentService.ListAllByGroupId(groupId);
+        }// GET: api/<AppointmentController>
+        [HttpGet("event/{eventId}/group/{groupId}")]
+        public IEnumerable<AppointmentDto> ListByGroupAndEvent(Guid groupId,Guid eventId)
+        {
+            return _appointmentService.ListByGroupAndEvent(groupId, eventId);
         }
 
         // GET api/<AppointmentController>/5
@@ -39,10 +44,22 @@ namespace mosquebookapi.Controllers
             return Ok(appointment);
         }
 
+        // GET api/<AppointmentController>/5
+        [HttpGet("/user/phonenumber/{phoneNumber}")]
+        public IActionResult GetByUserPhoneNumber(string phoneNumber)
+        {
+            var appointment = _appointmentService.FindByUserPhoneNumber(phoneNumber);
+            if (appointment == null)
+            {
+                NotFound();
+            }
+            return Ok(appointment);
+        }
         // POST api/<AppointmentController>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] AppointmentDto appointmentDto)
         {
+            
             if(appointmentDto.User == null | appointmentDto.Group == null || appointmentDto.Group.Id == Guid.Empty)
             {
                 return BadRequest();
@@ -52,7 +69,7 @@ namespace mosquebookapi.Controllers
                 await _appointmentService.BookAppointment(appointmentDto);
             }catch(Microsoft.EntityFrameworkCore.DbUpdateException dbException)
             {
-                if (dbException.InnerException != null && dbException.InnerException.Message.Contains("IX_Appointment_Date_UserId"))
+                if (dbException.InnerException != null && dbException.InnerException.Message.Contains("IX_Appointment_EventId_UserId"))
                 {
                     return StatusCode(500, new
                     {
@@ -63,6 +80,7 @@ namespace mosquebookapi.Controllers
                 {
                     return StatusCode(500, new
                     {
+                        code = "Error",
                         dbException.InnerException.Message
                     }) ;
                 }

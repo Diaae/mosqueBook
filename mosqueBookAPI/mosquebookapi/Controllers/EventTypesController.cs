@@ -26,6 +26,13 @@ namespace eventTypebookapi.Controllers
             return await _eventTypeService.ListAll();
         }
 
+        //[HttpGet("mosque/{id}/eventtypes")]
+        //public IEnumerable<EventDto> GetEventsByMosque(Guid id)
+        //{
+        //    return _eventTypeService.ListAllByMosque(id);
+        //}
+
+
         // GET api/<MosqueController>/5
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)

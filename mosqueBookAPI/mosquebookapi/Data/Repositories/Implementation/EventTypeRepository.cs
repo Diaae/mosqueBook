@@ -12,6 +12,23 @@ namespace mosquebookapi.Data.Repositories.Implementation
         public EventTypeRepository(ApplicationContext applicationContext):base(applicationContext)
         {
         }
-        
+
+        public IEnumerable<EventType> ListAllByMosque(Guid id)
+        {
+            return Where(et => et.Mosque.Id == id).ToList();
+        }
+
+        public void Save(EventType eventType)
+        {
+            _context.Attach(eventType.Mosque);
+            if (Exists(eventType))
+            {
+                Update(eventType);
+            }
+            else
+            {
+                Add(eventType);
+            }
+        }
     }
 }

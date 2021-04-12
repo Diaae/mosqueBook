@@ -10,5 +10,7 @@ namespace mosquebookapi.Data.Repositories.Interfaces
     {
         Appointment FindByToken(Guid token);
         IEnumerable<Appointment> ListAllByGroupId(Guid groupId);
+        Appointment FindByUserPhoneNumber(string phoneNumber);
+        IEnumerable<Appointment> ListByGroupIdAndEventId(Guid groupId, Guid eventId);
     }
 }

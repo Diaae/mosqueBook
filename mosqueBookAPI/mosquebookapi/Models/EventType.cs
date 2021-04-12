@@ -18,5 +18,7 @@ namespace mosquebookapi.Models
         
         public virtual IEnumerable<Event> Events { get; set; }
 
+        [JsonIgnore]
+        public virtual Mosque Mosque { get; set; }
     }
 }

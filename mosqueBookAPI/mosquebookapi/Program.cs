@@ -16,6 +16,7 @@ namespace mosquebookapi
     {
         public static void Main(string[] args)
         {
+
             var host = CreateHostBuilder(args).Build();
 
             using (var serviceScope = host.Services.CreateScope())

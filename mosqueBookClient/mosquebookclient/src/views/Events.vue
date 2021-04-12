@@ -122,7 +122,7 @@ export default {
     },
   },
   mounted() {
-    api.fetch("eventTypes", (response) => {
+    api.fetch(`mosques/${this.$route.params.mosqueId}/eventtypes`, (response) => {
       this.events = response.data;
       this.totalRows = this.events.length;
       console.log(response);

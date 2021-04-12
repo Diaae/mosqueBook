@@ -11,6 +11,7 @@ using Microsoft.OpenApi.Models;
 using mosquebookapi.Data;
 using mosquebookapi.Data.Repositories;
 using mosquebookapi.Data.Repositories.Implementation;
+using mosquebookapi.Helpers;
 using mosquebookapi.Services;
 
 using System;
@@ -34,6 +35,8 @@ namespace mosquebookapi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",

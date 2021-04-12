@@ -13,6 +13,7 @@ namespace mosquebookapi.Services
     {
         private readonly IUserRepository _userRepository;
         private readonly IEventGroupRepository _eventGroupRepository;
+        private readonly IEventRepository _eventRepository;
         private readonly IAppointmentRepository _appointmentRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -20,6 +21,7 @@ namespace mosquebookapi.Services
         public AppointmentService(
             IUserRepository userRepository,
             IEventGroupRepository eventGroupRepository,
+            IEventRepository eventRepository,
             IAppointmentRepository appointmentRepository,
             IUnitOfWork unitOfWork,
             IMapper mapper
@@ -27,18 +29,32 @@ namespace mosquebookapi.Services
         {
             _userRepository = userRepository;
             _eventGroupRepository = eventGroupRepository;
+            _eventRepository = eventRepository;
             _appointmentRepository = appointmentRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public Task<int> BookAppointment(AppointmentDto appointmentDto)
+
+        internal IEnumerable<AppointmentDto> ListByGroupAndEvent(Guid groupId, Guid eventId)
+        {
+            var appointments = _appointmentRepository.ListByGroupIdAndEventId(groupId, eventId);
+
+            return _mapper.Map<IEnumerable<AppointmentDto>>(appointments);
+        }
+
+        public async Task<int> BookAppointment(AppointmentDto appointmentDto)
         {
             var appointment = _mapper.Map<Appointment>(appointmentDto);
-            var user = _userRepository.FindByEmail(appointment.User.Email);
+            var @event = await _eventRepository.FindById(appointment.Event.Id);
+            if(@event == null)
+            {
+                return 0;
+            }
+            var user = _userRepository.FindByPhoneNumber(appointment.User.PhoneNumber);
             if(user == null)
             {
                 _userRepository.Add(appointment.User);
-                _unitOfWork.CommitAsync();
+               await _unitOfWork.CommitAsync();
             }
             else
             {
@@ -46,10 +62,17 @@ namespace mosquebookapi.Services
             }
             appointment.Token = Guid.NewGuid();
             appointment.IsActif = true;
+            appointment.Event = @event;
             _appointmentRepository.Update(appointment);
 
-            return _unitOfWork.CommitAsync();
+            return await _unitOfWork.CommitAsync();
 
+        }
+
+        public AppointmentDto FindByUserPhoneNumber(string phoneNumber)
+        {
+            var appointment = _appointmentRepository.FindByUserPhoneNumber(phoneNumber);
+            return _mapper.Map<AppointmentDto>(appointment);
         }
 
         public AppointmentDto FindByToken(Guid token)

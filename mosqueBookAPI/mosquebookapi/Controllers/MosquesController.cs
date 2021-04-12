@@ -41,6 +41,17 @@ namespace mosquebookapi.Controllers
             return Ok(mosque);
         }
 
+        // GET api/<MosqueController>/5
+        [HttpGet("{id}/eventtypes")]
+        public async Task<IActionResult> GetMosqueEventTypes(Guid id)
+        {
+            var mosque = await _mosqueService.FindById(id);
+            if (mosque == null)
+            {
+                return NotFound();
+            }
+            return Ok(mosque.Events);
+        }
 
 
         // PUT api/<MosqueController>/5

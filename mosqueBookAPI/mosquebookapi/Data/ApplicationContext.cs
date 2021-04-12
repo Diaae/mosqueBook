@@ -76,6 +76,11 @@ namespace mosquebookapi.Data
             };
             modelBuilder.Entity<EventGroup>().HasData(eventGroups);
 
+            modelBuilder.Entity<TemporaryAuthenticator>().HasData(new TemporaryAuthenticator { 
+                Id = 1,
+                Token = Guid.NewGuid()
+            });
+
         }
         public DbSet<User> Users { get; set; }
         public DbSet<Appointment>  Appointments { get; set; }
@@ -83,5 +88,6 @@ namespace mosquebookapi.Data
         public DbSet<Event>  Events { get; set; }
         public DbSet<EventType>  EventTypes { get; set; }
         public DbSet<EventGroup> EventGroups { get; set; }
+        public DbSet<TemporaryAuthenticator> TemporaryAuthenticators { get; set; }
     }
 }

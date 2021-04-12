@@ -8,5 +8,7 @@ namespace mosquebookapi.Data.Repositories.Interfaces
 {
     public interface IEventTypeRepository : IGenericRepository<EventType>
     {
+        IEnumerable<EventType> ListAllByMosque(Guid id);
+        void Save(EventType eventType);
     }
 }

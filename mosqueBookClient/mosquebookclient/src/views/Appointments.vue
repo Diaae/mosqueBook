@@ -49,24 +49,33 @@
       </template>
 
       <template #cell(groups)="row">
-              <b-select
-              id="selectGroup"
-              text="Select a group"
-              block
-              variant="primary"
-              :options="row.item.groups"
-              value-field="id"
-              text-field="name"
-            >
-            </b-select>
+        <b-select
+          id="selectGroup"
+          text="Select a group"
+          block
+          variant="primary"
+          :options="row.item.groups"
+          value-field="id"
+          text-field="name"
+          v-model="selectedGroupId"
+          @change="
+            () => {
+              isShowEventDetailDisabled = selectedGroupId == null;
+            }
+          "
+        >
+        </b-select>
       </template>
 
       <template #cell(eventType)="row">
         {{ row.value.name }}
       </template>
+
+      <template #cell(date)="row">
+        {{ formatDate(row.value)}}
+      </template>
       <template #cell(actions)="row">
         <b-button
-          disabled
           variant="primary mr-1"
           v-b-modal.modal-moteur
           @click="Book(row.item.id)"
@@ -92,9 +101,10 @@
 <script>
 import api from "../shared/data.service";
 export default {
-  name: "Events",
+  name: "Appointments",
   data() {
     return {
+      isShowEventDetailDisabled: true,
       events: [],
       fields: [
         {
@@ -112,6 +122,7 @@ export default {
         },
         { key: "actions", label: "Actions" },
       ],
+      selectedGroupId: null,
       totalRows: 1,
       currentPage: 1,
       perPage: 5,
@@ -120,7 +131,7 @@ export default {
       sortDesc: false,
       sortDirection: "asc",
       filter: null,
-      dropdownGroups : []
+      dropdownGroups: [],
     };
   },
   methods: {
@@ -131,9 +142,22 @@ export default {
     },
     Book(eventId) {
       this.$router.push({
-        name: "Booking",
-        params: { eventId },
+        name: "AppointmentList",
+        params: { eventId, groupId: this.selectedGroupId },
       });
+    },
+    formatDate(date) {
+      let formatTime = (time) => {
+        return time < 10 ? "0" + time.toString() : time.toString();
+      };
+      date = new Date(date);
+      return (
+        date.toLocaleDateString() +
+        " " +
+        formatTime(date.getHours()) +
+        ":" +
+        formatTime(date.getMinutes()) 
+      );
     },
   },
   mounted() {

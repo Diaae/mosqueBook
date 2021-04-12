@@ -34,14 +34,9 @@ namespace mosquebookapi.Services
         public async Task<int> Save(EventTypeDto eventTypeDto)
         {
             var eventType = _mapper.Map<EventType>(eventTypeDto);
-            if (_eventTypeRepository.Exists(eventType))
-            {
-                _eventTypeRepository.Update(eventType);
-            }
-            else
-            {
-                _eventTypeRepository.Add(eventType);
-            }
+            eventType.Mosque = new Mosque { Id = eventTypeDto.MosqueId };
+            _eventTypeRepository.Save(eventType);
+            
             return await _uow.CommitAsync();
         }
 
@@ -56,6 +51,11 @@ namespace mosquebookapi.Services
         {
             var eventType = await _eventTypeRepository.FindById(eventTypeId);
             _eventTypeRepository.Remove(eventType);
+        }
+
+        public IEnumerable<EventDto> ListAllByMosque(Guid id)
+        {
+            return _mapper.Map<IEnumerable<EventDto>>(_eventTypeRepository.ListAllByMosque(id));
         }
     }
 }
