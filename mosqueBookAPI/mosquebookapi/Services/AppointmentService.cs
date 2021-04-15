@@ -53,6 +53,7 @@ namespace mosquebookapi.Services
             var user = _userRepository.FindByPhoneNumber(appointment.User.PhoneNumber);
             if(user == null)
             {
+                appointment.User.Email = string.IsNullOrEmpty(appointment.User.Email) ? null : appointment.User.Email;
                 _userRepository.Add(appointment.User);
                await _unitOfWork.CommitAsync();
             }

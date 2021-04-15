@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using mosquebookapi.Data;
 
 namespace mosquebookapi.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20210415003109_seedingNewData")]
+    partial class seedingNewData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -78,35 +80,35 @@ namespace mosquebookapi.Migrations
                         new
                         {
                             Id = new Guid("ee48fa11-be9a-4885-a244-98a0aedfbea5"),
-                            Date = new DateTime(2021, 4, 15, 0, 36, 25, 675, DateTimeKind.Local).AddTicks(1723),
+                            Date = new DateTime(2021, 4, 15, 0, 31, 9, 293, DateTimeKind.Local).AddTicks(2087),
                             Description = "",
                             EventTypeId = new Guid("d5d109a9-ac86-40ef-a783-b3c0b8fefaa1")
                         },
                         new
                         {
                             Id = new Guid("802e14d4-7c79-4740-aefc-6bf5b412129c"),
-                            Date = new DateTime(2021, 4, 15, 0, 36, 25, 675, DateTimeKind.Local).AddTicks(9009),
+                            Date = new DateTime(2021, 4, 15, 0, 31, 9, 294, DateTimeKind.Local).AddTicks(162),
                             Description = "",
                             EventTypeId = new Guid("d5d109a9-ac86-40ef-a783-b4c0b8fefaa1")
                         },
                         new
                         {
                             Id = new Guid("513a6d9e-b4ee-4299-a945-241428be5114"),
-                            Date = new DateTime(2021, 4, 15, 0, 36, 25, 675, DateTimeKind.Local).AddTicks(9026),
+                            Date = new DateTime(2021, 4, 15, 0, 31, 9, 294, DateTimeKind.Local).AddTicks(180),
                             Description = "",
                             EventTypeId = new Guid("d5d109a9-ac86-40ef-a783-b5c0b8fefaa1")
                         },
                         new
                         {
                             Id = new Guid("4ae8d4f8-7444-4aa5-9a80-af1c89f46805"),
-                            Date = new DateTime(2021, 4, 15, 0, 36, 25, 675, DateTimeKind.Local).AddTicks(9029),
+                            Date = new DateTime(2021, 4, 15, 0, 31, 9, 294, DateTimeKind.Local).AddTicks(185),
                             Description = "",
                             EventTypeId = new Guid("d5d109a9-ac86-40ef-a783-b6c0b8fefaa1")
                         },
                         new
                         {
                             Id = new Guid("c23ed31c-5ddc-4993-8b39-7665f43b7fd9"),
-                            Date = new DateTime(2021, 4, 15, 0, 36, 25, 675, DateTimeKind.Local).AddTicks(9031),
+                            Date = new DateTime(2021, 4, 15, 0, 31, 9, 294, DateTimeKind.Local).AddTicks(189),
                             Description = "",
                             EventTypeId = new Guid("d5d109a9-ac86-40ef-a783-b7c0b8fefaa1")
                         });
@@ -146,42 +148,42 @@ namespace mosquebookapi.Migrations
                         {
                             Id = new Guid("cf35efea-96a1-4f3a-943d-ae8389fb7337"),
                             EventId = new Guid("802e14d4-7c79-4740-aefc-6bf5b412129c"),
-                            MaxPlaces = 300,
+                            MaxPlaces = 10,
                             Name = "Salat Dohr"
                         },
                         new
                         {
                             Id = new Guid("2740bdfd-d621-4f42-9ae5-34e24ddc4e85"),
                             EventId = new Guid("513a6d9e-b4ee-4299-a945-241428be5114"),
-                            MaxPlaces = 300,
+                            MaxPlaces = 10,
                             Name = "Salat Asr"
                         },
                         new
                         {
                             Id = new Guid("a482283f-291a-43bd-8b88-6a4838e96998"),
                             EventId = new Guid("4ae8d4f8-7444-4aa5-9a80-af1c89f46805"),
-                            MaxPlaces = 300,
+                            MaxPlaces = 10,
                             Name = "Salat Maghreb"
                         },
                         new
                         {
                             Id = new Guid("b5d9b806-d791-440a-b773-8380b7d237bd"),
                             EventId = new Guid("c23ed31c-5ddc-4993-8b39-7665f43b7fd9"),
-                            MaxPlaces = 300,
+                            MaxPlaces = 10,
                             Name = "Salat Ishaa"
                         },
                         new
                         {
                             Id = new Guid("3be97c6d-7a78-44df-b1a7-2f7a035600c6"),
                             EventId = new Guid("c23ed31c-5ddc-4993-8b39-7665f43b7fd9"),
-                            MaxPlaces = 150,
+                            MaxPlaces = 10,
                             Name = "Tarawih group 1"
                         },
                         new
                         {
                             Id = new Guid("b450b7fa-7104-4cc1-9b4e-a15c639ca61e"),
                             EventId = new Guid("c23ed31c-5ddc-4993-8b39-7665f43b7fd9"),
-                            MaxPlaces = 150,
+                            MaxPlaces = 10,
                             Name = "Tarawih group 2"
                         });
                 });
@@ -297,7 +299,7 @@ namespace mosquebookapi.Migrations
                         new
                         {
                             Id = 1,
-                            Token = new Guid("7161863a-b4eb-4fe0-880a-0f96f384d87e")
+                            Token = new Guid("13b47836-12f0-4a17-a4d9-b9239e9ed64a")
                         });
                 });
 
