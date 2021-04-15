@@ -65,7 +65,7 @@ export default {
         },
         {
           key: "LastName",
-          label: "Late name",
+          label: "Last name",
           sortable: true,
           sortDirection: "desc",
           class: "text-center",
@@ -107,11 +107,11 @@ export default {
       this.currentPage = 1;
     },
      formatDate(date) {
-        let formatTime = (time) => {
-          return time < 10 ? '0' + time.toString() : time.toString()
-        };
+        // let formatTime = (time) => {
+        //   return time < 10 ? '0' + time.toString() : time.toString()
+        // };
         date = new Date(date);
-        return date.toLocaleDateString() + ' ' + formatTime(date.getHours()) + ':' + formatTime(date.getMinutes()) + ':' + formatTime(date.getSeconds());
+        return date.toLocaleDateString();
       }
   },
   mounted() {

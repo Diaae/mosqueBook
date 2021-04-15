@@ -1,6 +1,6 @@
 <template>
   <b-container>
-    <b-form  v-if="show">
+    <b-form v-if="show">
       <!-- Date -->
       <b-row>
         <b-col md="6">
@@ -144,59 +144,81 @@ export default {
     },
   },
   methods: {
-    validateInput(){
+    validateInput() {
       var status = true;
-      if(this.selectedGroupId == null){
+      if (this.selectedGroupId == null) {
         this.isDisabled = true;
-        this.makeToast("Please select a group","Warning","warning");
+        this.makeToast("Please select a group", "Warning", "warning");
         status = false;
       }
-      
-      if(!this.appointment.user.firstName.length){
-        this.isDisabled = true;
-        this.makeToast("Please input your first name","Warning","warning");
+
+      if (!this.appointment.user.firstName.length) {
+        this.makeToast("Please input your first name", "Warning", "warning");
         status = false;
       }
-      
-      if(!this.appointment.user.lastName .length){
-        this.isDisabled = true;
-        this.makeToast("Please input your last name","Warning","warning");
+
+      if (!this.appointment.user.lastName.length) {
+        this.makeToast("Please input your last name", "Warning", "warning");
         status = false;
       }
-      
-      if(!this.appointment.user.phoneNumber.length){
-        this.isDisabled = true;
-        this.makeToast("Please input your phone number","Warning","warning");
+
+      if (!this.appointment.user.phoneNumber.length) {
+        this.makeToast("Please input your phone number", "Warning", "warning");
         status = false;
       }
-      if(!this.appointment.date.length){
-        this.isDisabled = true;
-        this.makeToast("Please select a date","Warning","warning");
+      if (!this.appointment.date.length) {
+        this.makeToast("Please select a date", "Warning", "warning");
         status = false;
       }
       return status;
     },
     bookNow() {
-      if(!this.validateInput())
-        return;
-       this.isDisabled = true;
+      if (!this.validateInput()) return;
+      this.isDisabled = true;
       console.log(this.appointment);
       this.appointment.event = this.event;
       console.log(this.appointment.event);
-    api.post("appointments",this.appointment,(response)=>{
-      console.log(response);
-    },(error)=>{
-      console.log(error);
-       this.isDisabled = false;
-        if(error.response && error.response.status == 500  && error.response.data.code === "UserAlreadyHaveAppointment"){
-          this.makeToast("You have already booked at this date please check contact the mosque administration","Already booked","warning");
-
-        }else if(error.response && error.response.status == 500 ){
-          this.makeToast("An error has occured please try again later","Unknows error","danger");
-
+      api.post(
+        "appointments",
+        this.appointment,
+        (response) => {
+          if (response.status === 200) {
+            this.makeToast(
+              "You have successfully booked a place",
+              "Booked",
+              "success"
+            );
+            setTimeout(() => {
+              this.$router.push({
+                name: "Events",
+                params: { mosqueId:this.event.eventType.mosqueId },
+              });
+            }, 3000);
+          }
+          console.log(response);
+        },
+        (error) => {
+          console.log(error);
+          this.isDisabled = false;
+          if (
+            error.response &&
+            error.response.status == 500 &&
+            error.response.data.code === "UserAlreadyHaveAppointment"
+          ) {
+            this.makeToast(
+              "You have already booked at this date please contact the mosque administration",
+              "Already booked",
+              "warning"
+            );
+          } else if (error.response && error.response.status == 500) {
+            this.makeToast(
+              "An error has occured please try again later",
+              "Unknows error",
+              "danger"
+            );
+          }
         }
-      });
-
+      );
     },
     onDateChange() {
       this.availabilityIsShown = false;
@@ -218,31 +240,39 @@ export default {
     },
     getGroupsByEvent() {
       console.log(this.appointment.date);
-      api.fetch(`events/${this.$route.params.eventId}?date=${this.appointment.date}`, (response) => {
-        console.log(response);
-        this.event = response.data;
-        this.dropdownGroups = [
-          { value: null, text: "Please select a group" },
-        ];
-        this.event.groups.forEach((element) => {
-          this.dropdownGroups.push({
-            text: element.name,
-            value: element.id,
+      api.fetch(
+        `events/${this.$route.params.eventId}?date=${this.appointment.date}`,
+        (response) => {
+          console.log(response);
+          this.event = response.data;
+          this.dropdownGroups = [
+            { value: null, text: "Please select a group" },
+          ];
+          this.event.groups.forEach((element) => {
+            this.dropdownGroups.push({
+              text: element.name,
+              value: element.id,
+            });
           });
-        });
-      },(error)=>{
-        if(error.response && error.response.status == 404)
-          this.makeToast('There is no event in this date, please select another date',"Date not valid","danger");
+        },
+        (error) => {
+          if (error.response && error.response.status == 404)
+            this.makeToast(
+              "There is no event in this date, please select another date",
+              "Date not valid",
+              "danger"
+            );
           this.isDisabled = true;
           this.dropdownGroups = [];
           this.event = null;
-      });
+        }
+      );
     },
-    makeToast(message,title = "",variant = "primary") {
+    makeToast(message, title = "", variant = "primary") {
       this.$bvToast.toast(message, {
-      title,
-      variant,
-      solid: true
+        title,
+        variant,
+        solid: true,
       });
     },
   },

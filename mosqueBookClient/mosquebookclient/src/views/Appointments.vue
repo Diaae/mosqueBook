@@ -1,6 +1,6 @@
 <template>
   <b-container>
-    <b-row>
+    <!-- <b-row>
       <b-col md="6" class="my-1">
         <b-form-group label-cols-sm="3" label="Filter" class="mb-0">
           <b-input-group>
@@ -24,7 +24,7 @@
           ></b-form-select>
         </b-form-group>
       </b-col>
-    </b-row>
+    </b-row> -->
 
     <!-- Main table element -->
     <b-table
@@ -72,7 +72,7 @@
       </template>
 
       <template #cell(date)="row">
-        {{ formatDate(row.value)}}
+        {{ formatDate(row.value) }}
       </template>
       <template #cell(actions)="row">
         <b-button
@@ -125,7 +125,7 @@ export default {
       selectedGroupId: null,
       totalRows: 1,
       currentPage: 1,
-      perPage: 5,
+      perPage: 10,
       pageOptions: [5, 10, 15],
       sortBy: null,
       sortDesc: false,
@@ -135,6 +135,14 @@ export default {
     };
   },
   methods: {
+    // getOptions(groups) {
+    //   //console.log(groups);
+    //   groups.unshift({
+    //     id: null,
+    //     name: "Please select a group",
+    //   });
+    //   return groups;
+    // },
     onFiltered(filteredItems) {
       // Trigger pagination to update the number of buttons/pages due to filtering
       this.totalRows = filteredItems.length;
@@ -147,17 +155,11 @@ export default {
       });
     },
     formatDate(date) {
-      let formatTime = (time) => {
-        return time < 10 ? "0" + time.toString() : time.toString();
-      };
+      // let formatTime = (time) => {
+      //   return time < 10 ? "0" + time.toString() : time.toString();
+      // };
       date = new Date(date);
-      return (
-        date.toLocaleDateString() +
-        " " +
-        formatTime(date.getHours()) +
-        ":" +
-        formatTime(date.getMinutes()) 
-      );
+      return date.toLocaleDateString();
     },
   },
   mounted() {

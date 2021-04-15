@@ -1,6 +1,6 @@
 <template>
   <b-container>
-    <b-row>
+    <!-- <b-row>
       <b-col md="6" class="my-1">
         <b-form-group label-cols-sm="3" label="Filter" class="mb-0">
           <b-input-group>
@@ -24,7 +24,7 @@
           ></b-form-select>
         </b-form-group>
       </b-col>
-    </b-row>
+    </b-row> -->
 
     <!-- Main table element -->
     <b-table
@@ -100,7 +100,7 @@ export default {
       ],
       totalRows: 1,
       currentPage: 1,
-      perPage: 5,
+      perPage: 10,
       pageOptions: [5, 10, 15],
       sortBy: null,
       sortDesc: false,
