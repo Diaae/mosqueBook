@@ -2,7 +2,7 @@
   <b-container>
     <b-row class="mb-5 text-center">
       <b-col>
-        <span v-if="appointments.length"> {{ appointments[0].event.eventType.name}}, {{appointments[0].group.name}}, {{formatDate(appointments[0].event.date)}} </span>
+        <span v-if="appointments.length"> {{ appointments[0].event.eventType.name}} - {{appointments[0].group.name}} - {{formatDate(appointments[0].event.date)}} </span>
       </b-col>
     </b-row>
     <!-- Main table element -->
@@ -45,6 +45,9 @@
 
       </template>
     </b-table>
+     <b-button  variant="danger" :href= "$router.resolve({name:'Appointments'}).href" class="mr-4">Go Back</b-button>
+     <b-button onClick="window.print();" variant="primary" >Print</b-button>
+     
   </b-container>
 </template>
 

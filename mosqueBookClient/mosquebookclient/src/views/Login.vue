@@ -51,7 +51,7 @@ export default {
             }
         },(error)=>{
             if(error.response.status === 400){
-                alert("ya sir t9awd");
+                alert("Incorrect login or password");
             }
         });
       }

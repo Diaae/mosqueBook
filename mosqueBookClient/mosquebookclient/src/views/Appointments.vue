@@ -1,13 +1,20 @@
 <template>
   <b-container>
-    <!-- <b-row>
+    <b-row>
       <b-col md="6" class="my-1">
-        <b-form-group label-cols-sm="3" label="Filter" class="mb-0">
+        <b-form-group
+          id="datepicker"
+          label-cols-sm="3"
+          label="Date :"
+          class="mb-0"
+        >
           <b-input-group>
-            <b-form-input
+            <b-form-datepicker
+              id="bookingDate"
+              class="mb-2"
+              placeholder="Select a date"
               v-model="filter"
-              placeholder="Input a value"
-            ></b-form-input>
+            ></b-form-datepicker>
             <b-input-group-append>
               <b-button :disabled="!filter" @click="filter = ''"
                 >Clear</b-button
@@ -16,15 +23,7 @@
           </b-input-group>
         </b-form-group>
       </b-col>
-      <b-col md="6" class="my-1">
-        <b-form-group label-cols-sm="3" label="Per page" class="mb-0">
-          <b-form-select
-            v-model="perPage"
-            :options="pageOptions"
-          ></b-form-select>
-        </b-form-group>
-      </b-col>
-    </b-row> -->
+    </b-row>
 
     <!-- Main table element -->
     <b-table
@@ -41,6 +40,7 @@
       :sort-by.sync="sortBy"
       :sort-desc.sync="sortDesc"
       :sort-direction="sortDirection"
+      :filter-function="filterTable"
       @filtered="onFiltered"
     >
       <template #table-busy class="text-center text-danger my-2">
@@ -135,14 +135,13 @@ export default {
     };
   },
   methods: {
-    // getOptions(groups) {
-    //   //console.log(groups);
-    //   groups.unshift({
-    //     id: null,
-    //     name: "Please select a group",
-    //   });
-    //   return groups;
-    // },
+    filterTable(row, filter) {
+      if (this.formatDate(filter) == this.formatDate(row.date)) {
+        return true;
+      } else {
+        return false;
+      }
+    },
     onFiltered(filteredItems) {
       // Trigger pagination to update the number of buttons/pages due to filtering
       this.totalRows = filteredItems.length;
