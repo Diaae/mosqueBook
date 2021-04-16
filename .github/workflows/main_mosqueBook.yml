@@ -25,13 +25,13 @@ jobs:
       run: dotnet build --configuration Release
 
     - name: dotnet publish
-      run: dotnet publish -c Release -o ../mosqueBookAPI/mosquebookapi
+      run: dotnet publish -c Release -o ../mosqueBookAPI
 
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v2
       with:
         name: .net-app
-        path: ../mosqueBookAPI/mosquebookapi
+        path: ../mosqueBookAPI
 
   deploy:
     runs-on: windows-latest
