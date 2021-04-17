@@ -28,7 +28,7 @@ jobs:
         dotnet-version: '5.0'
 
     - name: Install dependencies
-      run: dotnet restore
+      run: dotnet restore ./mosqueBookAPI
 
     - name: Build
       run: dotnet build ./mosqueBookAPI -c Release 
