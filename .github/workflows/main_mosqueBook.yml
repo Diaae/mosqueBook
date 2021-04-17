@@ -10,7 +10,9 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_WEBAPP_NAME: mosqueBook    
+  AZURE_WEBAPP_NAME: mosqueBook
+  WORKING_DIRECTORY: ./mosqueBookAPI
+    
 
 
 
@@ -28,13 +30,15 @@ jobs:
         dotnet-version: '5.0'
 
     - name: Install dependencies
-      run: dotnet restore ./mosqueBookAPI
+      run: dotnet restore 
 
     - name: Build
-      run: dotnet build ./mosqueBookAPI -c Release 
+      run: dotnet buildv-c Release 
 
     - name: publish
-      run: dotnet publish ./mosqueBookAPI -c Release -o './mosqueBookRelease'
+      run: |
+        dotnet publish -c Release -o './mosqueBookRelease'
+        dir
 
 
   deploy:
@@ -51,4 +55,4 @@ jobs:
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_531923dc0b7943d5af7a314f069feef1 }}
-        package: './mosqueBookRelease'
+        package: '.'
