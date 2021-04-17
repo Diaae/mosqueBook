@@ -39,7 +39,6 @@ jobs:
       run: |
         dotnet publish ${{ env.WORKING_DIRECTORY }} -c Release -o '${{ env.WORKING_DIRECTORY }}/mosqueBookRelease'
         dir
-        dir $(System.DefaultWorkingDirectory)
 
 
   deploy:
