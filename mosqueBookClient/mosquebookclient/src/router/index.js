@@ -26,6 +26,7 @@ const routes = [
 ]
 const router = new Router({
   //mode: 'hash', // https://router.vuejs.org/api/#mode
+  
   linkActiveClass: 'open active',
   routes
 });
