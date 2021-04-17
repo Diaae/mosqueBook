@@ -26,12 +26,15 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: '5.0'
+      
+    - name: where are we
+      run: cd
+
+    - name: list some key files
+      run: ls -lrt
 
     - name: Build with dotnet
-      run: dotnet build --configuration Release
-
-    - name: dotnet publish
-      run: dotnet publish
+      run: dotnet build -c Release 
 
 
 
