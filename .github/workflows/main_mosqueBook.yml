@@ -10,8 +10,8 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_WEBAPP_NAME: mosqueBook    # set this to your application's name
-  AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
+  AZURE_WEBAPP_NAME: mosqueBook    
+  #WORKING_DIRECTORY: ./mosqueBookAPI
 
 
 
@@ -27,11 +27,14 @@ jobs:
       with:
         dotnet-version: '5.0'
 
-    - name: Build with dotnet
+    - name: Install dependencies
+      run: dotnet restore
+
+    - name: Build
       run: dotnet build ./mosqueBookAPI -c Release 
 
     - name: publish
-      run: dotnet publish ./mosqueBookAPI -c Release
+      run: dotnet publish ./mosqueBookAPI -c Release -o 'mosqueBookAPIRelease'
 
 
   deploy:
@@ -47,7 +50,6 @@ jobs:
       id: deploy-to-webapp
       uses: azure/webapps-deploy@v2
       with:
-        app-name: 'mosqueBook'
-        slot-name: 'production'
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_531923dc0b7943d5af7a314f069feef1 }}
-        package: .
+        package: ${{ env.AZURE_WEBAPP_NAME }}/mosqueBookAPIRelease
