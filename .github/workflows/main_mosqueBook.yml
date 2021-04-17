@@ -33,6 +33,9 @@ jobs:
     - name: changing directory
       run: cd ./mosqueBookAPI
 
+    - name: list some key files
+      run: dir
+
     - name: Build with dotnet
       run: dotnet build -c Release 
 
