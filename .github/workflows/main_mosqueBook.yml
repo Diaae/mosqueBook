@@ -5,17 +5,21 @@ name: Build and deploy ASP.Net Core app to Azure Web App - mosqueBook
 
 on:
   push:
-    paths:
-      - "mosquebookAPI/**"
     branches:
       - main
   workflow_dispatch:
 
+env:
+  AZURE_WEBAPP_NAME: mosqueBook    # set this to your application's name
+  AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
+
+
+
 jobs:
   build:
     runs-on: windows-latest
-
     steps:
+
     - uses: actions/checkout@v2
 
     - name: Set up .NET Core
@@ -27,7 +31,7 @@ jobs:
       run: dotnet build --configuration Release
 
     - name: dotnet publish
-      run: dotnet publish -c Release -o ./mosqueBookAPI
+      run: dotnet publish -c Release -o
 
 
 
