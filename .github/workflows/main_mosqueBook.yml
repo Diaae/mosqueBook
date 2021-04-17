@@ -50,4 +50,4 @@ jobs:
         app-name: 'mosqueBook'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_531923dc0b7943d5af7a314f069feef1 }}
-        package: ./mosqueBookAPI
+        package: .
