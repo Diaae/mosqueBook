@@ -31,7 +31,7 @@ jobs:
       run: dotnet build ./mosqueBookAPI -c Release 
 
     - name: publish
-      run: dotnet publish -c Release
+      run: dotnet publish ./mosqueBookAPI -c Release
 
 
   deploy:
@@ -42,10 +42,6 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
-    - name: Download artifact from build job
-      uses: actions/download-artifact@v2
-      with:
-        name: .net-app
 
     - name: Deploy to Azure Web App
       id: deploy-to-webapp
@@ -54,4 +50,4 @@ jobs:
         app-name: 'mosqueBook'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_531923dc0b7943d5af7a314f069feef1 }}
-        package: .
+        package: ./mosqueBookAPI
