@@ -45,11 +45,10 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
-
     - name: Deploy to Azure Web App
       id: deploy-to-webapp
       uses: azure/webapps-deploy@v2
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_531923dc0b7943d5af7a314f069feef1 }}
-        package: ${{ env.AZURE_WEBAPP_NAME }}/mosqueBookAPIRelease
+        package: ${{ env.AZURE_WEBAPP_NAME }}./mosqueBookAPI
