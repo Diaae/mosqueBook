@@ -34,7 +34,7 @@ jobs:
       run: dotnet build ./mosqueBookAPI -c Release 
 
     - name: publish
-      run: dotnet publish ./mosqueBookAPI -c Release -o './mosquebookAPI/mosquebookqpi/Release'
+      run: dotnet publish ./mosqueBookAPI -c Release -o './mosqueBookRelease'
 
 
   deploy:
@@ -51,4 +51,4 @@ jobs:
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_531923dc0b7943d5af7a314f069feef1 }}
-        package: .
+        package: './mosqueBookRelease'
