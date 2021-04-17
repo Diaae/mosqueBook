@@ -30,7 +30,7 @@ jobs:
         dotnet-version: '5.0'
 
     - name: Install dependencies
-      run: dotnet ${{ env.WORKING_DIRECTORY }} restore 
+      run: dotnet restore ${{ env.WORKING_DIRECTORY }} 
 
     - name: Build
       run: dotnet build ${{ env.WORKING_DIRECTORY }} -c Release 
