@@ -27,17 +27,8 @@ jobs:
       with:
         dotnet-version: '5.0'
 
-    - name: list some key files
-      run: dir
-
-    - name: changing directory
-      run: cd ./mosqueBookAPI
-
-    - name: list some key files
-      run: dir
-
     - name: Build with dotnet
-      run: dotnet build -c Release 
+      run: dotnet build ./mosqueBookAPI -c Release 
 
 
 
