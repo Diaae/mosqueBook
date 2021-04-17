@@ -31,7 +31,7 @@ jobs:
       run: dotnet build --configuration Release
 
     - name: dotnet publish
-      run: dotnet publish -c Release -o
+      run: dotnet publish -c Release
 
 
 
