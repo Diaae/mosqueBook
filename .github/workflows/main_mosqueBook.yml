@@ -30,6 +30,8 @@ jobs:
     - name: Build with dotnet
       run: dotnet build ./mosqueBookAPI -c Release 
 
+    - name: publish
+      run: dotnet publish -c Release
 
 
   deploy:
