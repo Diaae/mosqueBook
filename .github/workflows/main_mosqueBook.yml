@@ -30,14 +30,14 @@ jobs:
         dotnet-version: '5.0'
 
     - name: Install dependencies
-      run: dotnet restore 
+      run: dotnet ${{ env.WORKING_DIRECTORY }} restore 
 
     - name: Build
-      run: dotnet buildv-c Release 
+      run: dotnet build ${{ env.WORKING_DIRECTORY }} -c Release 
 
     - name: publish
       run: |
-        dotnet publish -c Release -o './mosqueBookRelease'
+        dotnet publish ${{ env.WORKING_DIRECTORY }} -c Release -o './mosqueBookRelease'
         dir
 
 
