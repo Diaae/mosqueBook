@@ -11,12 +11,8 @@ on:
 
 env:
   AZURE_WEBAPP_NAME: mosqueBook
-  WORKING_DIRECTORY: ./mosqueBookAPI
-    
-
-
-
-
+  AZURE_WEBAPP_PACKAGE_PATH: '.' 
+  
 jobs:
   build:
     runs-on: windows-latest
@@ -29,30 +25,16 @@ jobs:
       with:
         dotnet-version: '5.0'
 
-    - name: Install dependencies
-      run: dotnet restore ${{ env.WORKING_DIRECTORY }} 
-
-    - name: Build
-      run: dotnet build ${{ env.WORKING_DIRECTORY }} -c Release 
-
-    - name: publish
+    - name: build and publish
       run: |
-        dotnet publish ${{ env.WORKING_DIRECTORY }} -c Release -o '${{ env.WORKING_DIRECTORY }}/mosqueBookRelease'
+        dotnet restore ./mosqueBookAPI
+        dotnet build ./mosqueBookAPI -c Release
+        dotnet publish ./mosqueBookAPI -c Release -o './mosqueBookAPI/mosqueBookRelease'
         dir
 
-
-  deploy:
-    runs-on: windows-latest
-    needs: build
-    environment:
-      name: 'production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
-    steps:
-    - name: Deploy to Azure Web App
-      id: deploy-to-webapp
+    - name: deploy to azure
       uses: azure/webapps-deploy@v2
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_531923dc0b7943d5af7a314f069feef1 }}
-        package: '$(System.DefaultWorkingDirectory)'
+        package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/mosqueBookAPI/mosqueBookRelease'
