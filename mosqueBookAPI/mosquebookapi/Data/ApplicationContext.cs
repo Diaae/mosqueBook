@@ -73,107 +73,150 @@ namespace mosquebookapi.Data
             };
             modelBuilder.Entity<EventType>().HasData(eventType1, eventType2, eventType3, eventType4, eventType5);
 
-            var events = new[]
+            for (int i = 1; i <= 30; i++)
             {
-                new
+                var ev1 = new
                 {
-                    Id = Guid.Parse("ee48fa11-be9a-4885-a244-98a0aedfbea5"),
+                    Id = Guid.NewGuid(),
                     EventTypeId = eventType1.Id,
-                    Date = DateTime.Now,
+                    Date = DateTime.Now.AddDays(i),
                     Description = "",
                     MosqueId = mosque.Id
-                },
-                new
+                };
+                var ev2 = new
                 {
-                    Id = Guid.Parse("802e14d4-7c79-4740-aefc-6bf5b412129c"),
+                    Id = Guid.NewGuid(),
                     EventTypeId = eventType2.Id,
-                    Date = DateTime.Now,
+                    Date = DateTime.Now.AddDays(i),
                     Description = "",
                     MosqueId = mosque.Id
-                },
-                    new
+                };
+                var ev3 = new
                 {
-                    Id = Guid.Parse("513a6d9e-b4ee-4299-a945-241428be5114"),
+                    Id = Guid.NewGuid(),
                     EventTypeId = eventType3.Id,
-                    Date = DateTime.Now,
+                    Date = DateTime.Now.AddDays(i),
                     Description = "",
                     MosqueId = mosque.Id
-                },
-                new
+                };
+                var ev4 = new
                 {
-                    Id = Guid.Parse("4ae8d4f8-7444-4aa5-9a80-af1c89f46805"),
+                    Id = Guid.NewGuid(),
                     EventTypeId = eventType4.Id,
-                    Date = DateTime.Now,
+                    Date = DateTime.Now.AddDays(i),
                     Description = "",
                     MosqueId = mosque.Id
-                },      new
+                };
+                var ev5 = new
                 {
-                    Id = Guid.Parse("c23ed31c-5ddc-4993-8b39-7665f43b7fd9"),
+                    Id = Guid.NewGuid(),
                     EventTypeId = eventType5.Id,
-                    Date = DateTime.Now,
+                    Date = DateTime.Now.AddDays(i),
                     Description = "",
                     MosqueId = mosque.Id
-                }
-            };
-            modelBuilder.Entity<Event>().HasData(events);
-            var eventGroups = new[]
-            {
-                new
+                };
+
+                modelBuilder.Entity<Event>().HasData(ev1, ev2, ev3, ev4, ev5);
+
+                var evgr1 = new
                 {
-                    Id = Guid.Parse("4a113557-d989-4243-af30-4d6906ce02de"),
+                    Id = Guid.NewGuid(),
                     MaxPlaces = 300,
-                    Name = "Salat "+eventType1.Name,
-                    EventId = events[0].Id
-                },
-                new
+                    Name = "Salat " + eventType1.Name,
+                    EventId = ev1.Id
+                };
+                var evgr2 = new
                 {
-                    Id = Guid.Parse("cf35efea-96a1-4f3a-943d-ae8389fb7337"),
+                    Id = Guid.NewGuid(),
                     MaxPlaces = 300,
-                   Name = "Salat "+eventType2.Name,
-                    EventId = events[1].Id
-                }
-                ,
-                new
+                    Name = "Salat " + eventType2.Name,
+                    EventId = ev2.Id
+                };
+                var evgr3 = new
                 {
-                    Id = Guid.Parse("2740bdfd-d621-4f42-9ae5-34e24ddc4e85"),
+                    Id = Guid.NewGuid(),
                     MaxPlaces = 300,
-                   Name = "Salat "+eventType3.Name,
-                    EventId = events[2].Id
-                }
-                   ,
-                new
+                    Name = "Salat " + eventType3.Name,
+                    EventId = ev3.Id
+                };
+                var evgr4 = new
                 {
-                    Id = Guid.Parse("a482283f-291a-43bd-8b88-6a4838e96998"),
+                    Id = Guid.NewGuid(),
                     MaxPlaces = 300,
-                   Name = "Salat "+eventType4.Name,
-                    EventId = events[3].Id
-                }
-                  ,
-                new
+                    Name = "Salat " + eventType4.Name,
+                    EventId = ev4.Id
+                };
+                var evgr5 = new
                 {
-                    Id = Guid.Parse("b5d9b806-d791-440a-b773-8380b7d237bd"),
+                    Id = Guid.NewGuid(),
                     MaxPlaces = 300,
-                   Name = "Salat "+eventType5.Name,
-                    EventId = events[4].Id
-                }
-                    ,
-                new
+                    Name = "Salat " + eventType5.Name,
+                    EventId = ev5.Id
+                };
+                var evgr6 = new
                 {
-                    Id = Guid.Parse("3be97c6d-7a78-44df-b1a7-2f7a035600c6"),
+                    Id = Guid.NewGuid(),
                     MaxPlaces = 150,
-                   Name = "Tarawih group 1",
-                    EventId = events[4].Id
-                }
-                    ,
-                new
+                    Name = "Tarawih group 1",
+                    EventId = ev5.Id
+                };
+                var evgr7 = new
                 {
-                    Id = Guid.Parse("b450b7fa-7104-4cc1-9b4e-a15c639ca61e"),
+                    Id = Guid.NewGuid(),
                     MaxPlaces = 150,
-                     Name = "Tarawih group 2",
-                    EventId = events[4].Id
-                }
-            };
-            modelBuilder.Entity<EventGroup>().HasData(eventGroups);
+                    Name = "Tarawih group 2",
+                    EventId = ev5.Id
+                };
+            
+                modelBuilder.Entity<EventGroup>().HasData(evgr1, evgr2, evgr3, evgr4, evgr5, evgr6, evgr7);
+            }
+
+            //var events = new[]
+            //{
+            //    new
+            //    {
+            //        Id = Guid.Parse("ee48fa11-be9a-4885-a244-98a0aedfbea5"),
+            //        EventTypeId = eventType1.Id,
+            //        Date = DateTime.Now,
+            //        Description = "",
+            //        MosqueId = mosque.Id
+            //    },
+            //    new
+            //    {
+            //        Id = Guid.Parse("802e14d4-7c79-4740-aefc-6bf5b412129c"),
+            //        EventTypeId = eventType2.Id,
+            //        Date = DateTime.Now,
+            //        Description = "",
+            //        MosqueId = mosque.Id
+            //    },
+            //        new
+            //    {
+            //        Id = Guid.Parse("513a6d9e-b4ee-4299-a945-241428be5114"),
+            //        EventTypeId = eventType3.Id,
+            //        Date = DateTime.Now,
+            //        Description = "",
+            //        MosqueId = mosque.Id
+            //    },
+            //    new
+            //    {
+            //        Id = Guid.Parse("4ae8d4f8-7444-4aa5-9a80-af1c89f46805"),
+            //        EventTypeId = eventType4.Id,
+            //        Date = DateTime.Now,
+            //        Description = "",
+            //        MosqueId = mosque.Id
+            //    },      new
+            //    {
+            //        Id = Guid.Parse("c23ed31c-5ddc-4993-8b39-7665f43b7fd9"),
+            //        EventTypeId = eventType5.Id,
+            //        Date = DateTime.Now,
+            //        Description = "",
+            //        MosqueId = mosque.Id
+            //    }
+            //};
+
+            //modelBuilder.Entity<Event>().HasData(events);
+
+
 
             modelBuilder.Entity<TemporaryAuthenticator>().HasData(new TemporaryAuthenticator
             {
