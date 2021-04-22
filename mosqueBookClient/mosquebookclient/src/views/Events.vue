@@ -50,7 +50,7 @@
           class="align-middle"
           variant="dark"
           ></b-spinner>
-          <strong> Loading...</strong>
+          <strong> Biite haben Sie Geduld...</strong>
         </div>
       </template>
 
@@ -59,11 +59,11 @@
       </template>
       <template #cell(actions)="row">
         <b-button
-          variant="primary mr-1"
+          variant="success mr-1"
           v-b-modal.modal-moteur
           @click="Book(row.item.id)"
         >
-          Book
+          Reservieren
         </b-button>
       </template>
     </b-table>
@@ -92,17 +92,19 @@ export default {
       fields: [
         {
           key: "name",
-          label: "Event Type",
+          label: "Salat",
           sortable: true,
           sortDirection: "desc",
         },
         {
           key: "description",
-          label: "Description",
+          label: "Beschreibung",
           sortable: true,
           class: "text-center",
         },
-        { key: "actions", label: "Actions" },
+        { key: "actions",
+         label: "Handlungen" 
+        },
       ],
       totalRows: 1,
       currentPage: 1,

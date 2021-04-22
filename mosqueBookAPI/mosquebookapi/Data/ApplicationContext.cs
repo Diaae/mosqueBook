@@ -67,7 +67,7 @@ namespace mosquebookapi.Data
             {
                 Id = Guid.Parse("d5d109a9-ac86-40ef-a783-b7c0b8fefaa1"),
                 Name = "Ishaa",
-                Description = "Please choose a group",
+                Description = "Tarawih Gruppe 1 - Tarawih Gruppe 2",
                 MosqueId = mosque.Id
 
             };

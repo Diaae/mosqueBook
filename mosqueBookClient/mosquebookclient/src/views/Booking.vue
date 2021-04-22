@@ -4,7 +4,7 @@
       <!-- Date -->
       <b-row>
         <b-col md="6">
-          <b-form-group id="datepicker" label="Date:" label-for="bookingDate">
+          <b-form-group id="datepicker" label="Datum:" label-for="bookingDate">
             <b-form-datepicker
               id="bookingDate"
               class="mb-2"
@@ -15,7 +15,7 @@
         </b-col>
         <!-- Groups -->
         <b-col md="6">
-          <b-form-group id="groups" label="Group:" label-for="selectGroup">
+          <b-form-group id="groups" label="Gruppen:" label-for="selectGroup">
             <b-select
               id="selectGroup"
               text="Select a group"
@@ -44,7 +44,7 @@
 
       <b-form-group
         id="first-name-group"
-        label="First Name:"
+        label="Vorname:"
         label-for="first-name"
       >
         <b-form-input
@@ -59,7 +59,7 @@
 
       <b-form-group
         id="last-name-group"
-        label="Last Name:"
+        label="Nachname:"
         label-for="last-name"
       >
         <b-form-input
@@ -74,7 +74,7 @@
 
       <b-form-group
         id="phone-number-group"
-        label="Phone Number:"
+        label="Telefon Nummer:"
         label-for="phone-number"
       >
         <b-form-input
@@ -98,7 +98,7 @@
       </b-form-group>
 
       <b-button variant="dark" :disabled="isDisabled" @click="bookNow()">
-        Book Now</b-button
+        Abschließen</b-button
       >
     </b-form>
   </b-container>
@@ -148,7 +148,7 @@ export default {
       var status = true;
       if (this.selectedGroupId == null) {
         this.isDisabled = true;
-        this.makeToast("Please select a group", "Warning", "warning");
+        this.makeToast("Bitte wählen Sie eine Gruppe", "Warning", "warning");
         status = false;
       }
 
@@ -246,7 +246,7 @@ export default {
           console.log(response);
           this.event = response.data;
           this.dropdownGroups = [
-            { value: null, text: "Please select a group" },
+            { value: null, text: "Bitte wählen Sie eine Gruppe" },
           ];
           this.event.groups.forEach((element) => {
             this.dropdownGroups.push({

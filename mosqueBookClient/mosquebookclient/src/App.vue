@@ -4,8 +4,8 @@
       <nav-bar class="mb-4">
       </nav-bar>
       <main>
-        {{ $t("message") }}
-        {{ $t("booking.testmessage") }}
+        <!-- {{ $t("message") }}
+        {{ $t("booking.testmessage") }} -->
         <router-view></router-view>
       </main>
     </div>
