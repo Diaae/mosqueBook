@@ -25,14 +25,13 @@
         </b-form-group>
       </b-col>
     </b-row> -->
-
     <!-- Main table element -->
     <b-table
       head-variant="dark"
       bordered
       hover
-      show-empty
       stacked="md"
+      :busy="isBusy"
       :items="events"
       :fields="fields"
       :current-page="currentPage"
@@ -43,22 +42,28 @@
       :sort-direction="sortDirection"
       @filtered="onFiltered"
     >
-      <template #table-busy class="text-center text-danger my-2">
-        <b-spinner class="align-middle"></b-spinner>
-        <strong>Loading...</strong>
+      <template #table-busy>
+        <div class="text-center text-danger my-2">
+          <b-spinner 
+          style="width: 3rem; height: 3rem;" 
+          label="Large Spinner" 
+          class="align-middle"
+          variant="dark"
+          ></b-spinner>
+          <strong> Biite haben Sie Geduld...</strong>
+        </div>
       </template>
-
 
       <template #cell(eventType)="row">
         {{ row.value.name }}
       </template>
       <template #cell(actions)="row">
         <b-button
-          variant="primary mr-1"
+          variant="success mr-1"
           v-b-modal.modal-moteur
           @click="Book(row.item.id)"
         >
-          Book
+          Reservieren
         </b-button>
       </template>
     </b-table>
@@ -82,21 +87,24 @@ export default {
   name: "Events",
   data() {
     return {
+      isBusy: true,
       events: [],
       fields: [
         {
           key: "name",
-          label: "Event Type",
+          label: "Salat",
           sortable: true,
           sortDirection: "desc",
         },
         {
           key: "description",
-          label: "Description",
+          label: "Beschreibung",
           sortable: true,
           class: "text-center",
         },
-        { key: "actions", label: "Actions" },
+        { key: "actions",
+         label: "Handlungen" 
+        },
       ],
       totalRows: 1,
       currentPage: 1,
@@ -122,11 +130,15 @@ export default {
     },
   },
   mounted() {
-    api.fetch(`mosques/${this.$route.params.mosqueId}/eventtypes`, (response) => {
-      this.events = response.data;
-      this.totalRows = this.events.length;
-      console.log(response);
-    });
+    api.fetch(
+      `mosques/${this.$route.params.mosqueId}/eventtypes`,
+      (response) => {
+        this.events = response.data;
+        this.totalRows = this.events.length;
+        this.isBusy = false;
+        console.log(response);
+      }
+    );
   },
 };
 </script>
