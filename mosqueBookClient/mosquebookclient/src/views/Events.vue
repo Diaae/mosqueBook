@@ -50,7 +50,7 @@
           class="align-middle"
           variant="dark"
           ></b-spinner>
-          <strong> Biite haben Sie Geduld...</strong>
+          <strong> Bitte haben Sie Geduld...</strong>
         </div>
       </template>
 
