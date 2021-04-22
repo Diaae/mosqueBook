@@ -31,7 +31,7 @@ namespace mosquebookapi.Data
 
             modelBuilder.Entity<Mosque>().HasData(mosque);
 
-            var eventType1 = new
+            var fajrEventType = new
             {
                 Id = Guid.Parse("d5d109a9-ac86-40ef-a783-b3c0b8fefaa1"),
                 Name = "Fajr",
@@ -39,7 +39,7 @@ namespace mosquebookapi.Data
                 MosqueId = mosque.Id
 
             };
-            var eventType2 = new
+            var dohrEventType = new
             {
                 Id = Guid.Parse("d5d109a9-ac86-40ef-a783-b4c0b8fefaa1"),
                 Name = "Dohr",
@@ -47,7 +47,7 @@ namespace mosquebookapi.Data
                 MosqueId = mosque.Id
 
             };
-            var eventType3 = new
+            var asrEventType = new
             {
                 Id = Guid.Parse("d5d109a9-ac86-40ef-a783-b5c0b8fefaa1"),
                 Name = "Asr",
@@ -55,7 +55,7 @@ namespace mosquebookapi.Data
                 MosqueId = mosque.Id
 
             };
-            var eventType4 = new
+            var maghrebEventType = new
             {
                 Id = Guid.Parse("d5d109a9-ac86-40ef-a783-b6c0b8fefaa1"),
                 Name = "Maghreb",
@@ -63,7 +63,7 @@ namespace mosquebookapi.Data
                 MosqueId = mosque.Id
 
             };
-            var eventType5 = new
+            var ishaaEventType = new
             {
                 Id = Guid.Parse("d5d109a9-ac86-40ef-a783-b7c0b8fefaa1"),
                 Name = "Ishaa",
@@ -71,104 +71,104 @@ namespace mosquebookapi.Data
                 MosqueId = mosque.Id
 
             };
-            modelBuilder.Entity<EventType>().HasData(eventType1, eventType2, eventType3, eventType4, eventType5);
+            modelBuilder.Entity<EventType>().HasData(fajrEventType, dohrEventType, asrEventType, maghrebEventType, ishaaEventType);
 
             for (int i = 1; i <= 30; i++)
             {
-                var ev1 = new
+                var fajrEvent = new
                 {
                     Id = Guid.NewGuid(),
-                    EventTypeId = eventType1.Id,
+                    EventTypeId = fajrEventType.Id,
                     Date = DateTime.Now.AddDays(i),
                     Description = "",
                     MosqueId = mosque.Id
                 };
-                var ev2 = new
+                var dohrEvent = new
                 {
                     Id = Guid.NewGuid(),
-                    EventTypeId = eventType2.Id,
+                    EventTypeId = dohrEventType.Id,
                     Date = DateTime.Now.AddDays(i),
                     Description = "",
                     MosqueId = mosque.Id
                 };
-                var ev3 = new
+                var asrEvent = new
                 {
                     Id = Guid.NewGuid(),
-                    EventTypeId = eventType3.Id,
+                    EventTypeId = asrEventType.Id,
                     Date = DateTime.Now.AddDays(i),
                     Description = "",
                     MosqueId = mosque.Id
                 };
-                var ev4 = new
+                var maghrebEvent = new
                 {
                     Id = Guid.NewGuid(),
-                    EventTypeId = eventType4.Id,
+                    EventTypeId = maghrebEventType.Id,
                     Date = DateTime.Now.AddDays(i),
                     Description = "",
                     MosqueId = mosque.Id
                 };
-                var ev5 = new
+                var ishaaEvent = new
                 {
                     Id = Guid.NewGuid(),
-                    EventTypeId = eventType5.Id,
+                    EventTypeId = ishaaEventType.Id,
                     Date = DateTime.Now.AddDays(i),
                     Description = "",
                     MosqueId = mosque.Id
                 };
 
-                modelBuilder.Entity<Event>().HasData(ev1, ev2, ev3, ev4, ev5);
+                modelBuilder.Entity<Event>().HasData(fajrEvent, dohrEvent, asrEvent, maghrebEvent, ishaaEvent);
 
-                var evgr1 = new
+                var fajrEventGroup = new
                 {
                     Id = Guid.NewGuid(),
-                    MaxPlaces = 300,
-                    Name = "Salat " + eventType1.Name,
-                    EventId = ev1.Id
+                    MaxPlaces = 120,
+                    Name = "Salat " + fajrEventType.Name,
+                    EventId = fajrEvent.Id
                 };
-                var evgr2 = new
+                var dohrEventGroup = new
                 {
                     Id = Guid.NewGuid(),
-                    MaxPlaces = 300,
-                    Name = "Salat " + eventType2.Name,
-                    EventId = ev2.Id
+                    MaxPlaces = 120,
+                    Name = "Salat " + dohrEventType.Name,
+                    EventId = dohrEvent.Id
                 };
-                var evgr3 = new
+                var asrEventGroup = new
                 {
                     Id = Guid.NewGuid(),
-                    MaxPlaces = 300,
-                    Name = "Salat " + eventType3.Name,
-                    EventId = ev3.Id
+                    MaxPlaces = 120,
+                    Name = "Salat " + asrEventType.Name,
+                    EventId = asrEvent.Id
                 };
-                var evgr4 = new
+                var maghrebEventGroup = new
                 {
                     Id = Guid.NewGuid(),
-                    MaxPlaces = 300,
-                    Name = "Salat " + eventType4.Name,
-                    EventId = ev4.Id
+                    MaxPlaces = 120,
+                    Name = "Salat " + maghrebEventType.Name,
+                    EventId = maghrebEvent.Id
                 };
-                var evgr5 = new
+                var ishaaEventGroup1 = new
                 {
                     Id = Guid.NewGuid(),
-                    MaxPlaces = 300,
-                    Name = "Salat " + eventType5.Name,
-                    EventId = ev5.Id
+                    MaxPlaces = 120,
+                    Name = "Salat " + ishaaEventType.Name,
+                    EventId = ishaaEvent.Id
                 };
-                var evgr6 = new
+                var ishaaEventGroup2 = new
                 {
                     Id = Guid.NewGuid(),
-                    MaxPlaces = 150,
+                    MaxPlaces = 120,
                     Name = "Tarawih group 1",
-                    EventId = ev5.Id
+                    EventId = ishaaEvent.Id
                 };
-                var evgr7 = new
+                var ishaaEventGroup3 = new
                 {
                     Id = Guid.NewGuid(),
-                    MaxPlaces = 150,
+                    MaxPlaces = 120,
                     Name = "Tarawih group 2",
-                    EventId = ev5.Id
+                    EventId = ishaaEvent.Id
                 };
             
-                modelBuilder.Entity<EventGroup>().HasData(evgr1, evgr2, evgr3, evgr4, evgr5, evgr6, evgr7);
+                modelBuilder.Entity<EventGroup>().HasData(fajrEventGroup, dohrEventGroup, asrEventGroup, maghrebEventGroup, ishaaEventGroup1, ishaaEventGroup2, ishaaEventGroup3);
             }
 
             //var events = new[]
