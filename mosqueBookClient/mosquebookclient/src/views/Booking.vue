@@ -246,7 +246,7 @@ export default {
           console.log(response);
           this.event = response.data;
           this.dropdownGroups = [
-            { value: null, text: "Bitte wählen Sie eine Gruppe" },
+            { value: null, text: " Bitte wählen Sie eine Gruppe " },
           ];
           this.event.groups.forEach((element) => {
             this.dropdownGroups.push({
