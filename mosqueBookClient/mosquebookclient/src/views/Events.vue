@@ -25,14 +25,13 @@
         </b-form-group>
       </b-col>
     </b-row> -->
-
     <!-- Main table element -->
     <b-table
       head-variant="dark"
       bordered
       hover
-      show-empty
       stacked="md"
+      :busy="isBusy"
       :items="events"
       :fields="fields"
       :current-page="currentPage"
@@ -43,11 +42,17 @@
       :sort-direction="sortDirection"
       @filtered="onFiltered"
     >
-      <template #table-busy class="text-center text-danger my-2">
-        <b-spinner class="align-middle"></b-spinner>
-        <strong>Loading...</strong>
+      <template #table-busy>
+        <div class="text-center text-danger my-2">
+          <b-spinner 
+          style="width: 3rem; height: 3rem;" 
+          label="Large Spinner" 
+          class="align-middle"
+          variant="dark"
+          ></b-spinner>
+          <strong> Loading...</strong>
+        </div>
       </template>
-
 
       <template #cell(eventType)="row">
         {{ row.value.name }}
@@ -82,6 +87,7 @@ export default {
   name: "Events",
   data() {
     return {
+      isBusy: true,
       events: [],
       fields: [
         {
@@ -122,11 +128,15 @@ export default {
     },
   },
   mounted() {
-    api.fetch(`mosques/${this.$route.params.mosqueId}/eventtypes`, (response) => {
-      this.events = response.data;
-      this.totalRows = this.events.length;
-      console.log(response);
-    });
+    api.fetch(
+      `mosques/${this.$route.params.mosqueId}/eventtypes`,
+      (response) => {
+        this.events = response.data;
+        this.totalRows = this.events.length;
+        this.isBusy = false;
+        console.log(response);
+      }
+    );
   },
 };
 </script>
