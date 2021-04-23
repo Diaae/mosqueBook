@@ -91,8 +91,8 @@ namespace mosquebookapi.Data
                     Date = DateTime.Now.AddDays(i),
                     Description = "",
                     isFriday = false,
-                    MosqueId = mosque.Id         
-            };
+                    MosqueId = mosque.Id
+                };
                 var asrEvent = new
                 {
                     Id = Guid.NewGuid(),
