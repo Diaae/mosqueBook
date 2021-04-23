@@ -25,7 +25,7 @@ namespace mosquebookapi.Data
             {
                 Id = Guid.Parse("1a82c06a-4986-4ed3-b1dd-05271b4931d8"),
                 Address = "Neue Str. 3, 89077 Ulm",
-                Email = "AlSalam@gmail.com",
+                Email = "verwaltung@assalam-ulm.de",
                 Name = "Al-Salam Moschee",
             };
 
@@ -67,7 +67,7 @@ namespace mosquebookapi.Data
             {
                 Id = Guid.Parse("d5d109a9-ac86-40ef-a783-b7c0b8fefaa1"),
                 Name = "Ishaa",
-                Description = "Tarawih Gruppe 1 - Tarawih Gruppe 2",
+                Description = "Enthält Gruppen: Tarawih Gruppe 1 - Tarawih Gruppe 2",
                 MosqueId = mosque.Id
 
             };
@@ -82,6 +82,7 @@ namespace mosquebookapi.Data
                     Date = DateTime.Now.AddDays(i),
                     Description = "",
                     MosqueId = mosque.Id
+                    
                 };
                 var dohrEvent = new
                 {
@@ -89,8 +90,9 @@ namespace mosquebookapi.Data
                     EventTypeId = dohrEventType.Id,
                     Date = DateTime.Now.AddDays(i),
                     Description = "",
-                    MosqueId = mosque.Id
-                };
+                    isFriday = false,
+                    MosqueId = mosque.Id         
+            };
                 var asrEvent = new
                 {
                     Id = Guid.NewGuid(),

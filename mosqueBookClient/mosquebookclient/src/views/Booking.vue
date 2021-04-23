@@ -10,6 +10,7 @@
               class="mb-2"
               @input="onDateChange()"
               v-model="appointment.date"
+              placeholder="Wann?"
             ></b-form-datepicker>
           </b-form-group>
         </b-col>
@@ -51,7 +52,7 @@
           id="first-name"
           v-model="appointment.user.firstName"
           type="text"
-          placeholder="First Name"
+          placeholder="Vorname"
           :disabled="isDisabled"
           required
         ></b-form-input>
@@ -66,7 +67,7 @@
           id="last-name"
           v-model="appointment.user.lastName"
           type="text"
-          placeholder="Last Name"
+          placeholder="Nachname"
           :disabled="isDisabled"
           required
         ></b-form-input>
@@ -81,13 +82,13 @@
           id="phone-number"
           v-model="appointment.user.phoneNumber"
           type="text"
-          placeholder="Phone Number"
+          placeholder="Telefon Nummer"
           :disabled="isDisabled"
           required
         ></b-form-input>
       </b-form-group>
 
-      <b-form-group id="email-group" label="Email:" label-for="email">
+      <!-- <b-form-group id="email-group" label="Email:" label-for="email">
         <b-form-input
           id="email"
           v-model="appointment.user.email"
@@ -95,7 +96,7 @@
           placeholder="Email"
           :disabled="isDisabled"
         ></b-form-input>
-      </b-form-group>
+      </b-form-group> -->
 
       <b-button variant="dark" :disabled="isDisabled" @click="bookNow()">
         Abschließen</b-button

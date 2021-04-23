@@ -22,7 +22,7 @@
     >
       <template #table-busy class="text-center text-danger my-2">
         <b-spinner class="align-middle"></b-spinner>
-        <strong>Chargement...</strong>
+        <strong>Bitte haben Sie Geduld...</strong>
       </template>
 
       <template #cell(FirstName)="row">
@@ -45,8 +45,8 @@
 
       </template>
     </b-table>
-     <b-button  variant="danger" :href= "$router.resolve({name:'Appointments'}).href" class="mr-4">Go Back</b-button>
-     <b-button onClick="window.print();" variant="primary" >Print</b-button>
+     <b-button  variant="dark" :href= "$router.resolve({name:'Appointments'}).href" class="mr-4">Zurück</b-button>
+     <b-button onClick="window.print();" variant="primary" >Drücken</b-button>
      
   </b-container>
 </template>
@@ -61,14 +61,14 @@ export default {
       fields: [
         {
           key: "FirstName",
-          label: "First name",
+          label: "Vorname",
           sortable: true,
           sortDirection: "desc",
           class: "text-center",
         },
         {
           key: "LastName",
-          label: "Last name",
+          label: "Nachname",
           sortable: true,
           sortDirection: "desc",
           class: "text-center",
@@ -82,14 +82,14 @@ export default {
         },
         {
           key: "PhoneNumber",
-          label: "Phone number",
+          label: "Telefon Nummer",
           sortable: true,
           sortDirection: "desc",
           class: "text-center",
         },
         {
           key: "Signature",
-          label: "Signature",
+          label: "Unterschrift",
           sortable: false,
           class: "text-center",
         }
