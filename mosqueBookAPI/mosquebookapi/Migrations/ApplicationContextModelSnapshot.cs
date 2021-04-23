@@ -168,7 +168,7 @@ namespace mosquebookapi.Migrations
                         new
                         {
                             Id = 1,
-                            Token = new Guid("29378c63-027c-4887-940e-784bd105cc42")
+                            Token = new Guid("08a2ddd2-a15d-4581-8eb8-8cca54cdf44f")
                         });
                 });
 

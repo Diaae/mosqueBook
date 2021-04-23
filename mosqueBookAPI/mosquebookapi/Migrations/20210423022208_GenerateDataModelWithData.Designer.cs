@@ -9,7 +9,7 @@ using mosquebookapi.Data;
 namespace mosquebookapi.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20210423004230_GenerateDataModelWithData")]
+    [Migration("20210423022208_GenerateDataModelWithData")]
     partial class GenerateDataModelWithData
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -170,7 +170,7 @@ namespace mosquebookapi.Migrations
                         new
                         {
                             Id = 1,
-                            Token = new Guid("29378c63-027c-4887-940e-784bd105cc42")
+                            Token = new Guid("08a2ddd2-a15d-4581-8eb8-8cca54cdf44f")
                         });
                 });
 

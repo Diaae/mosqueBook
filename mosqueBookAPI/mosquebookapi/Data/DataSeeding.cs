@@ -38,7 +38,7 @@ namespace mosquebookapi.Data
                 {
                     Id = Guid.Parse("d5d109a9-ac86-40ef-a783-b4c0b8fefaa1"),
                     Name = "Dohr",
-                    Description = "",
+                    Description = "Jumuah Enthält Gruppen: Jumuah Gruppe 1 - Jumuah Gruppe 2",
                     Mosque = mosque
 
                 };
@@ -69,7 +69,7 @@ namespace mosquebookapi.Data
                 context.EventTypes.AddRange(new[] { fajrEventType, dohrEventType, asrEventType, maghrebEventType, ishaaEventType });
                 context.SaveChanges();
 
-                for (int i = 1; i <= 30; i++)
+                for (int i = 0; i <= 19; i++)
                 {
                     var fajrEvent = new Event
                     {
@@ -166,10 +166,12 @@ namespace mosquebookapi.Data
                             Id = Guid.NewGuid(),
                             MaxPlaces = 120,
                             Name = "Jumuah Gruppe 1",
+                            Event = dohrEvent
                         },new EventGroup{
                             Id = Guid.NewGuid(),
                             MaxPlaces = 120,
                             Name = "Jumuah Gruppe 2 " ,
+                            Event = dohrEvent
                         }
                         }
                        );
@@ -181,6 +183,7 @@ namespace mosquebookapi.Data
                             Id = Guid.NewGuid(),
                             MaxPlaces = 120,
                             Name = "Salat " + dohrEventType.Name,
+                            Event = dohrEvent
                         }
                         );
                     }

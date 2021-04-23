@@ -70,7 +70,7 @@ namespace mosquebookapi.Migrations
             migrationBuilder.InsertData(
                 table: "TemporaryAuthenticators",
                 columns: new[] { "Id", "Token" },
-                values: new object[] { 1, new Guid("29378c63-027c-4887-940e-784bd105cc42") });
+                values: new object[] { 1, new Guid("08a2ddd2-a15d-4581-8eb8-8cca54cdf44f") });
 
             migrationBuilder.CreateIndex(
                 name: "IX_User_PhoneNumber",
