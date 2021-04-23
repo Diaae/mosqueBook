@@ -5,19 +5,19 @@
         <b-form-group
           id="datepicker"
           label-cols-sm="3"
-          label="Date :"
+          label="Datum :"
           class="mb-0"
         >
           <b-input-group>
             <b-form-datepicker
               id="bookingDate"
               class="mb-2"
-              placeholder="Select a date"
+              placeholder="Wann?"
               v-model="filter"
             ></b-form-datepicker>
             <b-input-group-append>
               <b-button :disabled="!filter" @click="filter = ''"
-                >Clear</b-button
+                >Entfernen</b-button
               >
             </b-input-group-append>
           </b-input-group>
@@ -45,7 +45,7 @@
     >
       <template #table-busy class="text-center text-danger my-2">
         <b-spinner class="align-middle"></b-spinner>
-        <strong>Chargement...</strong>
+        <strong>Bitte haben Sie Geduld...</strong>
       </template>
 
       <template #cell(groups)="row">
@@ -80,7 +80,7 @@
           v-b-modal.modal-moteur
           @click="Book(row.item.id)"
         >
-          Print
+          Drücken
         </b-button>
       </template>
     </b-table>
@@ -109,18 +109,22 @@ export default {
       fields: [
         {
           key: "eventType",
-          label: "Event Type",
+          label: "Salat",
           sortable: true,
           sortDirection: "desc",
         },
-        { key: "date", label: "Date", sortable: true, class: "text-center" },
+        { key: "date",
+         label: "Datum",
+          sortable: true,
+           class: "text-center" },
         {
           key: "groups",
-          label: "Groups",
+          label: "Gruppen",
           sortable: true,
           class: "text-center",
         },
-        { key: "actions", label: "Actions" },
+        { key: "actions",
+         label: "" },
       ],
       selectedGroupId: null,
       totalRows: 1,

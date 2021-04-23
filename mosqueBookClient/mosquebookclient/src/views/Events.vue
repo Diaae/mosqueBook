@@ -103,7 +103,7 @@ export default {
           class: "text-center",
         },
         { key: "actions",
-         label: "Handlungen" 
+         label: "" 
         },
       ],
       totalRows: 1,

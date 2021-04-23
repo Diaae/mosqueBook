@@ -10,6 +10,7 @@
               class="mb-2"
               @input="onDateChange()"
               v-model="appointment.date"
+              placeholder="Wann?"
             ></b-form-datepicker>
           </b-form-group>
         </b-col>
@@ -51,7 +52,7 @@
           id="first-name"
           v-model="appointment.user.firstName"
           type="text"
-          placeholder="First Name"
+          placeholder="Vorname"
           :disabled="isDisabled"
           required
         ></b-form-input>
@@ -66,7 +67,7 @@
           id="last-name"
           v-model="appointment.user.lastName"
           type="text"
-          placeholder="Last Name"
+          placeholder="Nachname"
           :disabled="isDisabled"
           required
         ></b-form-input>
@@ -81,13 +82,13 @@
           id="phone-number"
           v-model="appointment.user.phoneNumber"
           type="text"
-          placeholder="Phone Number"
+          placeholder="Telefon Nummer"
           :disabled="isDisabled"
           required
         ></b-form-input>
       </b-form-group>
 
-      <b-form-group id="email-group" label="Email:" label-for="email">
+      <!-- <b-form-group id="email-group" label="Email:" label-for="email">
         <b-form-input
           id="email"
           v-model="appointment.user.email"
@@ -95,7 +96,7 @@
           placeholder="Email"
           :disabled="isDisabled"
         ></b-form-input>
-      </b-form-group>
+      </b-form-group> -->
 
       <b-button variant="dark" :disabled="isDisabled" @click="bookNow()">
         Abschließen</b-button
@@ -135,11 +136,11 @@ export default {
       return this.availability == 0
         ? {
             variant: "danger",
-            message: "There are no available places in this group",
+            message: "Es gibt keine freien Plätze in dieser Gruppe",
           }
         : {
             variant: "success",
-            message: `${this.availability} places are still available`,
+            message: `${this.availability} Plätze sind noch frei`,
           };
     },
   },
@@ -153,21 +154,21 @@ export default {
       }
 
       if (!this.appointment.user.firstName.length) {
-        this.makeToast("Please input your first name", "Warning", "warning");
+        this.makeToast("Bitte geben Sie Ihren Vornamen ein", "Warning", "warning");
         status = false;
       }
 
       if (!this.appointment.user.lastName.length) {
-        this.makeToast("Please input your last name", "Warning", "warning");
+        this.makeToast("Bitte geben Sie Ihren Nachnamen ein", "Warning", "warning");
         status = false;
       }
 
       if (!this.appointment.user.phoneNumber.length) {
-        this.makeToast("Please input your phone number", "Warning", "warning");
+        this.makeToast("Bitte geben Sie Ihre Rufnummer ein", "Warning", "warning");
         status = false;
       }
       if (!this.appointment.date.length) {
-        this.makeToast("Please select a date", "Warning", "warning");
+        this.makeToast("Bitte wählen Sie ein Datum aus", "Warning", "warning");
         status = false;
       }
       return status;
@@ -184,7 +185,7 @@ export default {
         (response) => {
           if (response.status === 200) {
             this.makeToast(
-              "You have successfully booked a place",
+              "Sie haben erfolgreich einen Platz gebucht",
               "Booked",
               "success"
             );
@@ -206,13 +207,13 @@ export default {
             error.response.data.code === "UserAlreadyHaveAppointment"
           ) {
             this.makeToast(
-              "You have already booked at this date please contact the mosque administration",
+              "Sie sind schon zu diesem Termin angemeldet, bitte kontaktieren Sie die Moscheeverwaltung",
               "Already booked",
               "warning"
             );
           } else if (error.response && error.response.status == 500) {
             this.makeToast(
-              "An error has occured please try again later",
+              "ein Fehler ist aufgetreten, bitte versuchen Sie später noch einmal",
               "Unknows error",
               "danger"
             );
@@ -258,7 +259,7 @@ export default {
         (error) => {
           if (error.response && error.response.status == 404)
             this.makeToast(
-              "There is no event in this date, please select another date",
+              "An diesem Datum gibt es keine Termine, bitte wählen Sie ein anderes Datum.",
               "Date not valid",
               "danger"
             );
