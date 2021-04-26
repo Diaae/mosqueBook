@@ -136,7 +136,7 @@ export default {
         this.events = response.data;
         this.totalRows = this.events.length;
         this.isBusy = false;
-        console.log(response);
+        //console.log(response);
       }
     );
   },

@@ -90,5 +90,17 @@ namespace mosquebookapi.Services
             return _mapper.Map<IEnumerable<AppointmentDto>>(appointments);
 
         }
+
+        public async Task<AppointmentDto> FindById(Guid id)
+        {
+            var appointment = await _appointmentRepository.FindById(id);
+
+            return _mapper.Map<AppointmentDto>(appointment);
+        }
+
+        public async Task Remove(Guid appointmentId)
+        {
+            _appointmentRepository.Remove(appointmentId);
+        }
     }
 }

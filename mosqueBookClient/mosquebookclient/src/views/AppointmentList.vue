@@ -2,11 +2,16 @@
   <b-container>
     <b-row class="mb-5 text-center">
       <b-col>
-        <span v-if="appointments.length"> {{ appointments[0].event.eventType.name}} - {{appointments[0].group.name}} - {{formatDate(appointments[0].event.date)}} </span>
+        <span v-if="appointments.length">
+          {{ appointments[0].event.eventType.name }} -
+          {{ appointments[0].group.name }} -
+          {{ formatDate(appointments[0].event.date) }}
+        </span>
       </b-col>
     </b-row>
     <!-- Main table element -->
     <b-table
+      ref="appointmentsTable"
       head-variant="dark"
       bordered
       hover
@@ -20,11 +25,6 @@
       :sort-desc.sync="sortDesc"
       :sort-direction="sortDirection"
     >
-      <template #table-busy class="text-center text-danger my-2">
-        <b-spinner class="align-middle"></b-spinner>
-        <strong>Bitte haben Sie Geduld...</strong>
-      </template>
-
       <template #cell(FirstName)="row">
         {{ row.item.user.firstName }}
       </template>
@@ -34,20 +34,32 @@
       </template>
 
       <template #cell(Email)="row">
-        {{ row.item.user.email  }}
+        {{ row.item.user.email }}
       </template>
 
       <template #cell(PhoneNumber)="row">
-        {{  row.item.user.phoneNumber }}
+        {{ row.item.user.phoneNumber }}
       </template>
-      
-      <template #cell(Signature)="">
 
+      <template #cell(Signature)=""> </template>
+
+      <template #cell(actions)="row">
+        <b-button
+          variant="danger mr-1"
+          v-b-modal.modal-moteur
+          @click="Cancel(row.item.id)"
+        >
+          Stornieren
+        </b-button>
       </template>
     </b-table>
-     <b-button  variant="dark" :href= "$router.resolve({name:'Appointments'}).href" class="mr-4">Zurück</b-button>
-     <b-button onClick="window.print();" variant="primary" >Drücken</b-button>
-     
+    <b-button
+      variant="dark"
+      :href="$router.resolve({ name: 'Appointments' }).href"
+      class="mr-4"
+      >Zurück</b-button
+    >
+    <b-button onClick="window.print();" variant="primary">Drücken</b-button>
   </b-container>
 </template>
 
@@ -92,7 +104,13 @@ export default {
           label: "Unterschrift",
           sortable: false,
           class: "text-center",
-        }
+        },
+        {
+          key: "actions",
+          label: "",
+          sortable: false,
+          class: "text-center",
+        },
       ],
       totalRows: 1,
       perPage: 5,
@@ -104,18 +122,53 @@ export default {
     };
   },
   methods: {
+    Cancel(appointmentId) {
+      if (confirm("Diesen Buchung wird gelöscht, sind Sie sicher?!")) {
+        api
+          .delete("appointments/" + appointmentId, {
+            params: { appointmentId },
+          })
+          .then((response) => {
+            if (response.status === 200) {
+              this.makeToast(
+                "Sie haben erfolgreich einen Buchung gelöscht",
+                "Gelöscht",
+                "danger"
+              );
+              this.refreshTable(appointmentId);
+            }
+          })
+          .catch((error) => {
+            console.log("Something went wrong" + error);
+          });
+      }
+    },
+
+    refreshTable(appointmentId) {
+      const index = this.appointments.findIndex(
+        (app) => app.id === appointmentId
+      );
+      this.appointments.splice(index, 1);
+    },
+    makeToast(message, title = "", variant = "primary") {
+      this.$bvToast.toast(message, {
+        title,
+        variant,
+        solid: true,
+      });
+    },
     onFiltered(filteredItems) {
       // Trigger pagination to update the number of buttons/pages due to filtering
       this.totalRows = filteredItems.length;
       this.currentPage = 1;
     },
-     formatDate(date) {
-        // let formatTime = (time) => {
-        //   return time < 10 ? '0' + time.toString() : time.toString()
-        // };
-        date = new Date(date);
-        return date.toLocaleDateString();
-      }
+    formatDate(date) {
+      // let formatTime = (time) => {
+      //   return time < 10 ? '0' + time.toString() : time.toString()
+      // };
+      date = new Date(date);
+      return date.toLocaleDateString();
+    },
   },
   mounted() {
     let eventId = this.$route.params.eventId;

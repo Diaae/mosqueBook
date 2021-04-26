@@ -98,6 +98,17 @@
         ></b-form-input>
       </b-form-group> -->
 
+      <b-form-checkbox
+        id="privacy-policy"
+        v-model="privacyPolicyStatus"
+        name="privacy-policy"
+        value="accepted"
+        unchecked-value="not_accepted"
+        class="mb-3"
+      >
+        <strong>Ich habe die Informationen zum Datenschutz gelesen und bin damit einverstanden.</strong>
+      </b-form-checkbox>
+
       <b-button variant="dark" :disabled="isDisabled" @click="bookNow()">
         Abschließen</b-button
       >
@@ -112,6 +123,7 @@ export default {
   name: "Booking",
   data() {
     return {
+      privacyPolicyStatus: 'not_accepted',
       event: null,
       show: true,
       isDisabled: true,
@@ -154,31 +166,47 @@ export default {
       }
 
       if (!this.appointment.user.firstName.length) {
-        this.makeToast("Bitte geben Sie Ihren Vornamen ein", "Warning", "warning");
+        this.makeToast(
+          "Bitte geben Sie Ihren Vornamen ein",
+          "Warning",
+          "warning"
+        );
         status = false;
       }
 
       if (!this.appointment.user.lastName.length) {
-        this.makeToast("Bitte geben Sie Ihren Nachnamen ein", "Warning", "warning");
+        this.makeToast(
+          "Bitte geben Sie Ihren Nachnamen ein",
+          "Warning",
+          "warning"
+        );
         status = false;
       }
 
       if (!this.appointment.user.phoneNumber.length) {
-        this.makeToast("Bitte geben Sie Ihre Rufnummer ein", "Warning", "warning");
+        this.makeToast(
+          "Bitte geben Sie Ihre Rufnummer ein",
+          "Warning",
+          "warning"
+        );
         status = false;
       }
       if (!this.appointment.date.length) {
         this.makeToast("Bitte wählen Sie ein Datum aus", "Warning", "warning");
         status = false;
       }
+      if(this.privacyPolicyStatus == 'not_accepted') {
+      this.makeToast("Bitte kreuzen Sie das Datenschutz Kontrollbox an", "Warning", "warning");
+      status = false;
+      }
       return status;
     },
     bookNow() {
       if (!this.validateInput()) return;
       this.isDisabled = true;
-      console.log(this.appointment);
+      //console.log(this.appointment);
       this.appointment.event = this.event;
-      console.log(this.appointment.event);
+      //console.log(this.appointment.event);
       api.post(
         "appointments",
         this.appointment,
@@ -192,14 +220,14 @@ export default {
             setTimeout(() => {
               this.$router.push({
                 name: "Events",
-                params: { mosqueId:this.event.eventType.mosqueId },
+                params: { mosqueId: this.event.eventType.mosqueId },
               });
             }, 3000);
           }
-          console.log(response);
+          //console.log(response);
         },
         (error) => {
-          console.log(error);
+          //console.log(error);
           this.isDisabled = false;
           if (
             error.response &&
@@ -235,16 +263,16 @@ export default {
       this.appointment.group = this.event.groups.find(
         (element) => element.id == this.selectedGroupId
       );
-      console.log(this.appointment.group);
+      //console.log(this.appointment.group);
       this.availabilityIsShown = true;
       this.availability = this.appointment.group.availability;
     },
     getGroupsByEvent() {
-      console.log(this.appointment.date);
+      //console.log(this.appointment.date);
       api.fetch(
         `events/${this.$route.params.eventId}?date=${this.appointment.date}`,
         (response) => {
-          console.log(response);
+          //console.log(response);
           this.event = response.data;
           this.dropdownGroups = [
             { value: null, text: " Bitte wählen Sie eine Gruppe " },

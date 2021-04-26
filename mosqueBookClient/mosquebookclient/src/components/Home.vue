@@ -4,7 +4,7 @@
       <div class="col-lg-12 text-center">
         <h1 class="mt-5">MosqueBook</h1>
         <p class="lead">
-          A booking app to help both mosques and people to comply with the COVID-20 regulations.
+          A booking app to help both mosques and people to comply with the COVID-19 regulations.
         </p>
         <ul class="list-unstyled">
           <li>release 1.0</li>

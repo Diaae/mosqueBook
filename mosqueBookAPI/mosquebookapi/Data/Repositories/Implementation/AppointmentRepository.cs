@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace mosquebookapi.Data.Repositories.Implementation
 {
-    public class AppointmentRepository : GenericRepository<Appointment>,IAppointmentRepository
+    public class AppointmentRepository : GenericRepository<Appointment>, IAppointmentRepository
     {
         public AppointmentRepository(ApplicationContext applicationContext):base(applicationContext)
         {
@@ -32,6 +32,13 @@ namespace mosquebookapi.Data.Repositories.Implementation
         public IEnumerable<Appointment> ListByGroupIdAndEventId(Guid groupId, Guid eventId)
         {
             return Where(a => a.Group.Id == groupId && a.Event.Id == eventId).Distinct().ToList();
+        }
+
+        public void Remove(Guid id)
+        {
+            var appointmentData = _context.Appointments.SingleOrDefault(ap => ap.Id == id);
+            _context.Remove(appointmentData);
+            _context.SaveChanges();
         }
 
         public override void Update(Appointment appointment)
