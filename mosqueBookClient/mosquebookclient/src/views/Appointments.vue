@@ -60,7 +60,7 @@
           v-model="row.item.selectedGroupId"
         >
           <template #first>
-            <b-select-option :value="-1" disabled
+            <b-select-option :value="null" disabled v-model="selected"
               >-- Bitte wähle eine Option --</b-select-option
             >
           </template>
@@ -101,12 +101,13 @@
 </template>
 
 <script>
+//bghitihom ikono disabled flbdya oui
 import api from "../shared/data.service";
 export default {
   name: "Appointments",
   data() {
     return {
-      isShowEventDetailDisabled: true,
+      buttonStatus: [],
       events: [],
       fields: [
         {
@@ -167,7 +168,7 @@ export default {
     api.fetch("events", (response) => {
       this.events = response.data;
       this.totalRows = this.events.length;
-
+      
       console.log(response);
     });
   },
