@@ -57,13 +57,13 @@
           :options="row.item.groups"
           value-field="id"
           text-field="name"
-          v-model="selectedGroupId"
-          @change="
-            () => {
-              isShowEventDetailDisabled = selectedGroupId == null;
-            }
-          "
+          v-model="row.item.selectedGroupId"
         >
+          <template #first>
+            <b-select-option :value="-1" disabled
+              >-- Bitte wähle eine Option --</b-select-option
+            >
+          </template>
         </b-select>
       </template>
 
@@ -76,11 +76,13 @@
       </template>
       <template #cell(actions)="row">
         <b-button
+          :ref="'btn' + row.item.id"
           variant="primary mr-1"
           v-b-modal.modal-moteur
-          @click="Book(row.item.id)"
+          @click="Book(row.item.id,row.item.selectedGroupId)"
+          :disabled="row.item.selectedGroupId == null"
         >
-          Drücken
+          Mehr anzeigen
         </b-button>
       </template>
     </b-table>
@@ -113,18 +115,14 @@ export default {
           sortable: true,
           sortDirection: "desc",
         },
-        { key: "date",
-         label: "Datum",
-          sortable: true,
-           class: "text-center" },
+        { key: "date", label: "Datum", sortable: true, class: "text-center" },
         {
           key: "groups",
           label: "Gruppen",
           sortable: true,
           class: "text-center",
         },
-        { key: "actions",
-         label: "" },
+        { key: "actions", label: "" },
       ],
       selectedGroupId: null,
       totalRows: 1,
@@ -151,10 +149,10 @@ export default {
       this.totalRows = filteredItems.length;
       this.currentPage = 1;
     },
-    Book(eventId) {
+    Book(eventId,groupId) {
       this.$router.push({
         name: "AppointmentList",
-        params: { eventId, groupId: this.selectedGroupId },
+        params: { eventId, groupId: groupId },
       });
     },
     formatDate(date) {
