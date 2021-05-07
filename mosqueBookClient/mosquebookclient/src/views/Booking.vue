@@ -107,13 +107,44 @@
         unchecked-value="not_accepted"
         class="mb-3"
       >
-        <strong>Ich habe die Informationen zum Datenschutz gelesen und bin damit einverstanden.</strong>
+        <strong
+          >Ich habe die Informationen zum
+          <span style="text-decoration: underline"
+            ><a
+              href="https://assalam-ulm.de/privacy-policy/"
+              target="_blank"
+              rel="noopener"
+              >Datenschutzerklärung</a
+            ></span
+          >
+          gelesen und bin damit einverstanden.</strong
+        >
       </b-form-checkbox>
 
       <b-button variant="dark" :disabled="isDisabled" @click="bookNow()">
         Abschließen</b-button
       >
     </b-form>
+
+    <!-- Card info -->
+    <b-row>
+      <b-col md="6 mx-auto">
+        <div class="mt-5">
+          <b-card
+            bg-variant="info"
+            text-variant="white"
+            header="Wichtiger Hinweis !"
+          >
+            <b-card-text
+              >Sollten Sie den Gebetstermin nicht wahrnehmen können bzw. Ihre
+              Reservation zu annullieren, Bitte Geben Sie die Verwaltung der
+              Moschee rechtzeitig Bescheid.<br><br> Telefon Nummer:
+              +4917643238452</b-card-text
+            >
+          </b-card>
+        </div>
+      </b-col>
+    </b-row>
   </b-container>
 </template>
 
@@ -125,7 +156,7 @@ export default {
   data() {
     return {
       minDate: new Date(),
-      privacyPolicyStatus: 'not_accepted',
+      privacyPolicyStatus: "not_accepted",
       event: null,
       show: true,
       isDisabled: true,
@@ -197,9 +228,13 @@ export default {
         this.makeToast("Bitte wählen Sie ein Datum aus", "Warning", "warning");
         status = false;
       }
-      if(this.privacyPolicyStatus == 'not_accepted') {
-      this.makeToast("Bitte kreuzen Sie das Datenschutz Kontrollbox an", "Warning", "warning");
-      status = false;
+      if (this.privacyPolicyStatus == "not_accepted") {
+        this.makeToast(
+          "Bitte kreuzen Sie das Datenschutz Kontrollbox an",
+          "Warning",
+          "warning"
+        );
+        status = false;
       }
       return status;
     },
