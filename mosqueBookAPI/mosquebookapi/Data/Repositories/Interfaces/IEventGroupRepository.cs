@@ -9,5 +9,6 @@ namespace mosquebookapi.Data.Repositories.Interfaces
     public interface IEventGroupRepository : IGenericRepository<EventGroup>
     {
         void Save(EventGroup eventGroup);
+        Task AddRange(IEnumerable<EventGroup> eventGroupList);
     }
 }

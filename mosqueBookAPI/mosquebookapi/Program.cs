@@ -23,7 +23,6 @@ namespace mosquebookapi
             {
                 var context = serviceScope.ServiceProvider.GetRequiredService<ApplicationContext>();
                 context.Database.Migrate();
-                await DataSeeding.InitData(context);
             }
 
             host.Run();

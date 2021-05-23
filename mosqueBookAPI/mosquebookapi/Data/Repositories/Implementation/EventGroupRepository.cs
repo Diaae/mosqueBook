@@ -13,6 +13,11 @@ namespace mosquebookapi.Data.Repositories.Implementation
         {
         }
 
+        public Task AddRange(IEnumerable<EventGroup> eventGroupList)
+        {
+            return _context.AddRangeAsync(eventGroupList);
+        }
+
         public void Save(EventGroup eventGroup)
         {
             _context.Attach(eventGroup.Event);
