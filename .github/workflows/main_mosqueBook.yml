@@ -1,0 +1,40 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
+name: Build and deploy ASP.Net Core app to Azure Web App - mosqueBook
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  AZURE_WEBAPP_NAME: mosqueBook
+  AZURE_WEBAPP_PACKAGE_PATH: '.' 
+  
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+
+    - uses: actions/checkout@v2
+
+    - name: Set up .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '5.0'
+
+    - name: build and publish
+      run: |
+        dotnet restore ./mosqueBookAPI
+        dotnet build ./mosqueBookAPI -c Release
+        dotnet publish ./mosqueBookAPI -c Release -o './mosqueBookAPI/mosqueBookRelease'
+        dir
+
+    - name: deploy to azure
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_531923dc0b7943d5af7a314f069feef1 }}
+        package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/mosqueBookAPI/mosqueBookRelease'

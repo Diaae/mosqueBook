@@ -25,7 +25,7 @@ const routes = [
   { name: "AppointmentList", path: '/appointmentList/event/:eventId/group/:groupId', component: AppointmentList },
 ]
 const router = new Router({
-  mode: 'hash', // https://router.vuejs.org/api/#mode
+  //mode: 'hash', // https://router.vuejs.org/api/#mode
   linkActiveClass: 'open active',
   routes
 });
