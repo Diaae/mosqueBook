@@ -11,5 +11,6 @@ namespace mosquebookapi.Data.Repositories.Interfaces
     {
         void Save(Event @event);
         Event FindByEventTypeIdAndDate(Guid eventTypeId, DateTime date);
+        Task AddRange(IEnumerable<Event> events);
     }
 }

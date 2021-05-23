@@ -77,7 +77,21 @@ namespace mosquebookapi.Controllers
                 });
             }
         }
+        [HttpPost("AddEventsByRange")]
+        public async Task<IActionResult> AddEventsByRange([FromQuery] int numberOfDays)
+        {
+            try
+            {
+                await _eventService.AddEvents(numberOfDays);
+                return Ok();
+            }
+            catch
+            {
+                throw;
+            }
 
+
+        }
         // DELETE api/<EventsController>/5
         [HttpDelete("{id}")]
         public async Task Delete(Guid id)
