@@ -2,4 +2,4 @@
 
 #### Home page access
 
-[MosqueBook Home](ashy-forest-06f938403.azurestaticapps.net)
+[MosqueBook Home][ashy-forest-06f938403.azurestaticapps.net]
